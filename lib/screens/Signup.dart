@@ -9,6 +9,8 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
 
+  static const String _title = 'Sign Up';
+
   Widget _buildMobileNoTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.mobile_screen_share,
                 color: Colors.white,
               ),
               hintText: 'Enter your Mobile No',
@@ -117,7 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Password',
+          'Confirm Password',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -146,6 +148,42 @@ class _SignupScreenState extends State<SignupScreen> {
       ],
     );
   }
+
+  Widget _buildFacilityNameTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Enter Facility Name',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Facility Name',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -187,7 +225,7 @@ class _SignupScreenState extends State<SignupScreen> {
 //    );
 //  }
 
-  Widget _buildSignUpBtn() {
+  Widget _buildNextBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
@@ -200,7 +238,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
         color: Colors.white,
         child: Text(
-          'Sign Up',
+          'Next',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -310,6 +348,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text(_title)),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -338,37 +377,36 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
+                    horizontal: 20.0,
+                    vertical: 20.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 30.0),
+//                      Text(
+//                        'Sign Up',
+//                        style: TextStyle(
+//                          color: Colors.white,
+//                          fontFamily: 'OpenSans',
+//                          fontSize: 30.0,
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+                      const SizedBox(height: 30.0),
                       _buildMobileNoTF(),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       _buildEmailTF(),
-                      SizedBox(
+                      const SizedBox(
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
-                      SizedBox(height: 30.0),
-                      _buildPasswordTF(),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       _buildConfirmPasswordTF(),
-                      //_buildForgotPasswordBtn(),
-                      //_buildRememberMeCheckbox(),
-                      SizedBox(height: 30.0),
-                      _buildSignUpBtn(),
+
+                      const SizedBox(height: 30.0),
+                      _buildFacilityNameTF(),
+                      const SizedBox(height: 30.0),
+                      _buildNextBtn(),
                       //_buildSignInWithText(),
                       // _buildSocialBtnRow(),
                       //_buildSignupBtn(),
