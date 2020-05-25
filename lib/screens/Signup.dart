@@ -3,18 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:my_app/Helper/genderSelection.dart';
 import 'package:my_app/screens/signUpAddress.dart';
 import 'package:my_app/utilities/styles.dart';
+import 'package:my_app/data/service/Fieldvalidation_services.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 GlobalKey<FormState>_key=new GlobalKey();
- String emptyvalidation (String value){  
-              if (value.isEmpty){               
-                return 'Field cannot be empty';
-              }
-              return null;
-              }
+
 class _SignupScreenState extends State<SignupScreen> {
 
   static const String _title = 'Sign Up';
@@ -33,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.phone,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -48,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Mobile No',
               hintStyle: kHintTextStyle,
             ),
-            validator :emptyvalidation
+            validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -83,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
-            validator :emptyvalidation
+             validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -119,7 +115,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
-            validator :emptyvalidation
+             validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -154,7 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Confirm Password',
               hintStyle: kHintTextStyle,
             ),
-            validator :emptyvalidation
+             validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -190,7 +186,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Facility Name',
               hintStyle: kHintTextStyle,
             ),
-            validator :emptyvalidation
+             validator :Commanvalidator.validate
           ),
         ),
       ],

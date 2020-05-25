@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:my_app/Helper/genderSelection.dart';
 import 'package:my_app/screens/signUpAddress.dart';
 import 'package:my_app/utilities/styles.dart';
+import 'package:my_app/data/service/Fieldvalidation_services.dart';
+
 
 class SignupAddressScreen extends StatefulWidget {
   @override
   _SignupAddressScreenState createState() => _SignupAddressScreenState();
 }
+GlobalKey<FormState>_key=new GlobalKey();
 
 class _SignupAddressScreenState extends State<SignupAddressScreen> {
 
@@ -26,8 +29,8 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
+          child: TextFormField(
+            keyboardType: TextInputType.phone,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -42,6 +45,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
               hintText: 'Enter your Mobile No',
               hintStyle: kHintTextStyle,
             ),
+             validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -60,7 +64,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -76,6 +80,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
+             validator :Commanvalidator.validate
           ),
         ),
       ],
@@ -89,7 +94,9 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
+          if (_key.currentState.validate() ){
           print('next Button Pressed');
+          } return null;
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -245,6 +252,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
                     horizontal: 20.0,
                     vertical: 20.0,
                   ),
+                  child: Form(key: _key,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -257,6 +265,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
                       _buildNextBtn(),
                     ],
                   ),
+                  )
                 ),
               )
             ],

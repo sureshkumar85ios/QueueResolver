@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:my_app/screens/Signup.dart';
 import 'package:my_app/screens/signupUserSelection.dart';
 import 'package:my_app/utilities/styles.dart';
+import 'package:my_app/data/service/Fieldvalidation_services.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,16 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String message ='';
   bool _validate =false;
   GlobalKey<FormState>_key=new GlobalKey();
+  String errormessage ='';
 
- String emptyvalidation (String value){
-  
-              if (value.isEmpty){
-               
-                return 'Field cannot be empty';
-              }
-              return null;
-            
-}
+
    @override
    void dispose(){
      _emailController.dispose();
@@ -37,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        
         Text(
           'Email',
           style: kLabelStyle,
@@ -47,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -62,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
-            validator : emptyvalidation,
+            validator : EmailValidator.validate,
           ),
         ),
       ],
@@ -83,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: _passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -98,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
-            validator : emptyvalidation,
+            validator : PasswordValidator.validate,
           ),
         ),
       ],
@@ -145,7 +143,30 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+void _showAlertforsignin(){
+  showDialog(context: context,
+  barrierDismissible:false,
+  builder: (BuildContext context)
+  {
+    return AlertDialog(
+      
+      title : new Text('Wrong user name and password'),
+      content : new Text('Please provide correct username and try agian'),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () =>Navigator.of(context).pop(), 
+        child: new Text('Try Again'
+        ))
+               
+      ],
 
+
+    );
+  }
+  );
+  
+  
+}
   Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -154,12 +175,20 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 5.0,
         onPressed: () {
            if (_key.currentState.validate()  ){
-          print('Login Button Pressed??');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => SignupScreen()),
-          );
+           
+            if(_emailController.text == "test" && _passwordController.text == "123456"){
+                print('Login Button Pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) => SignupScreen()),
+                );          
            }
+           else 
+           {
+              _showAlertforsignin();
+           }
+           
+        } return null;
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
