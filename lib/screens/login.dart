@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/screens/Signup.dart';
+import 'package:my_app/screens/signupUserSelection.dart';
 import 'package:my_app/utilities/styles.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -222,7 +223,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: (){
+        print('Login Button Pressed');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => SignupUserSelectionScreen()),
+        );
+      },
       child: RichText(
         text: TextSpan(
           children: [

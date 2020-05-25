@@ -90,11 +90,8 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
         elevation: 5.0,
         onPressed: () {
           print('next Button Pressed');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => SignupAddressScreen()),
-          );
-        },        padding: EdgeInsets.all(15.0),
+        },
+        padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
