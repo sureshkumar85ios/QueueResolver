@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:my_app/screens/login.dart';
 import 'package:my_app/utilities/styles.dart';
 import 'package:my_app/data/data.dart';
-import 'package:my_app/Helper/genderSelection.dart';
-
 
 class Home extends StatefulWidget {
   @override

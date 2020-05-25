@@ -55,7 +55,7 @@ class GenderSelection extends StatefulWidget {
         this.selectedGender,
         this.checkIconAlignment = Alignment.bottomCenter,
         @required this.onChanged,
-        this.linearGradient = balbirGradient,
+        this.linearGradient = roundedGradient,
         this.maleImage = const AssetImage("assets/images/boy.png",
         ),
         this.femaleImage = const AssetImage("assets/images/girl.png",
