@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => print('Forgot Password Button Pressed'),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
-          'Forgot Password?',
+          'Forgot Password??',
           style: kLabelStyle,
         ),
       ),
