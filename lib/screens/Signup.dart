@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/Helper/genderSelection.dart';
+import 'package:my_app/screens/signUpAddress.dart';
 import 'package:my_app/utilities/styles.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -172,7 +174,7 @@ class _SignupScreenState extends State<SignupScreen> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.lock,
+                Icons.shopping_basket,
                 color: Colors.white,
               ),
               hintText: 'Enter your Facility Name',
@@ -225,14 +227,45 @@ class _SignupScreenState extends State<SignupScreen> {
 //    );
 //  }
 
+//  Widget _buildNextBtn() {
+//    return Container(
+//      padding: EdgeInsets.symmetric(vertical: 25.0),
+//      width: double.infinity,
+//      child: RaisedButton(
+//        elevation: 5.0,
+//        onPressed: () => print('Login Button Pressed'),
+//        padding: EdgeInsets.all(15.0),
+//        shape: RoundedRectangleBorder(
+//          borderRadius: BorderRadius.circular(30.0),
+//        ),
+//        color: Colors.white,
+//        child: Text(
+//          'Next',
+//          style: TextStyle(
+//            color: Color(0xFF527DAA),
+//            letterSpacing: 1.5,
+//            fontSize: 18.0,
+//            fontWeight: FontWeight.bold,
+//            fontFamily: 'OpenSans',
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+
   Widget _buildNextBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
-        padding: EdgeInsets.all(15.0),
+        onPressed: () {
+          print('next Button Pressed');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => SignupAddressScreen()),
+          );
+        },        padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -270,6 +303,9 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+
+
+
 //  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
 //    return GestureDetector(
 //      onTap: onTap,
@@ -283,7 +319,7 @@ class _SignupScreenState extends State<SignupScreen> {
 //            BoxShadow(
 //              color: Colors.black26,
 //              offset: Offset(0, 2),
-//              blurRadius: 6.0,
+//              blurRadius: 6.0,Ω
 //            ),
 //          ],
 //          image: DecorationImage(
@@ -317,31 +353,34 @@ class _SignupScreenState extends State<SignupScreen> {
 //    );
 //  }
 
-  Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+  Widget _buildGenderOptionBtn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Choose your Gender',
+          style: kLabelStyle,
         ),
-      ),
+        SizedBox(height: 10.0),
+        GenderSelection(
+          maleText: "Male", //default Male
+          femaleText: "Female", //default Female
+          linearGradient: balbirGradient,
+          selectedGenderIconBackgroundColor: Colors.indigo, // default red
+          checkIconAlignment: Alignment.centerRight,   // default bottomRight
+          selectedGenderCheckIcon: null, // default Icons.check
+          onChanged: (Gender gender){
+            print(gender);
+          },
+          equallyAligned: true,
+          animationDuration: Duration(milliseconds: 400),
+          isCircular: true, // default : true,
+          isSelectedGenderIconCircular: true,
+          opacityOfGradient: 0.6,
+          padding: const EdgeInsets.all(3),
+          size: 120, //default : 120
+        )
+      ],
     );
   }
 
@@ -383,15 +422,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-//                      Text(
-//                        'Sign Up',
-//                        style: TextStyle(
-//                          color: Colors.white,
-//                          fontFamily: 'OpenSans',
-//                          fontSize: 30.0,
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
                       const SizedBox(height: 30.0),
                       _buildMobileNoTF(),
                       const SizedBox(height: 30.0),
@@ -402,14 +432,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       _buildPasswordTF(),
                       const SizedBox(height: 30.0),
                       _buildConfirmPasswordTF(),
-
                       const SizedBox(height: 30.0),
                       _buildFacilityNameTF(),
                       const SizedBox(height: 30.0),
                       _buildNextBtn(),
-                      //_buildSignInWithText(),
-                      // _buildSocialBtnRow(),
-                      //_buildSignupBtn(),
                     ],
                   ),
                 ),
