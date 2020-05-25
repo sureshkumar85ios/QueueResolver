@@ -8,7 +8,13 @@ class SignupScreen extends StatefulWidget {
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
-
+GlobalKey<FormState>_key=new GlobalKey();
+ String emptyvalidation (String value){  
+              if (value.isEmpty){               
+                return 'Field cannot be empty';
+              }
+              return null;
+              }
 class _SignupScreenState extends State<SignupScreen> {
 
   static const String _title = 'Sign Up';
@@ -26,7 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -42,6 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Mobile No',
               hintStyle: kHintTextStyle,
             ),
+            validator :emptyvalidation
           ),
         ),
       ],
@@ -60,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -76,6 +83,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
+            validator :emptyvalidation
           ),
         ),
       ],
@@ -95,7 +103,7 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -111,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
+            validator :emptyvalidation
           ),
         ),
       ],
@@ -129,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -145,6 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Confirm Password',
               hintStyle: kHintTextStyle,
             ),
+            validator :emptyvalidation
           ),
         ),
       ],
@@ -164,7 +174,7 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -180,6 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
               hintText: 'Enter your Facility Name',
               hintStyle: kHintTextStyle,
             ),
+            validator :emptyvalidation
           ),
         ),
       ],
@@ -260,12 +271,16 @@ class _SignupScreenState extends State<SignupScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          print('next Button Pressed');
-          Navigator.push(
+          print('next Button Pressed');{          
+          if (_key.currentState.validate() ){
+          Navigator.push(            
             context,
             MaterialPageRoute(builder: (BuildContext context) => SignupAddressScreen()),
           );
-        },        padding: EdgeInsets.all(15.0),
+            } return null;
+          }
+        },
+                padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -338,6 +353,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     horizontal: 20.0,
                     vertical: 20.0,
                   ),
+                  child :new Form(key: _key,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -358,6 +374,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ],
                   ),
                 ),
+              )
               )
             ],
           ),
