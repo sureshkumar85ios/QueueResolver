@@ -11,6 +11,27 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
+  final _emailController =TextEditingController();
+  final _passwordController =TextEditingController();
+  String message ='';
+  bool _validate =false;
+  GlobalKey<FormState>_key=new GlobalKey();
+
+ String emptyvalidation (String value){
+  
+              if (value.isEmpty){
+               
+                return 'Field cannot be empty';
+              }
+              return null;
+            
+}
+   @override
+   void dispose(){
+     _emailController.dispose();
+     _passwordController.dispose();
+     super.dispose();
+   }
 
   Widget _buildEmailTF() {
     return Column(
@@ -25,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -41,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
             ),
+            validator : emptyvalidation,
           ),
         ),
       ],
@@ -60,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -76,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
             ),
+            validator : emptyvalidation,
           ),
         ),
       ],
@@ -89,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => print('Forgot Password Button Pressed'),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
-          'Forgot Password??',
+          'Forgot Password?',
           style: kLabelStyle,
         ),
       ),
@@ -130,11 +153,13 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          print('Login Button Pressed');
+           if (_key.currentState.validate()  ){
+          print('Login Button Pressed??');
           Navigator.push(
             context,
             MaterialPageRoute(builder: (BuildContext context) => SignupScreen()),
           );
+           }
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -289,6 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     horizontal: 40.0,
                     vertical: 120.0,
                   ),
+                   child :new Form(key: _key,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -315,6 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildSignupBtn(),
                     ],
                   ),
+                   )
                 ),
               )
             ],
