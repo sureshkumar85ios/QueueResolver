@@ -22,16 +22,16 @@ class _bookingConfirmationState extends State<bookingConfirmation> {
             SliverAppBar(
               title: Text(''),
               backgroundColor: Colors.green,
-              expandedHeight: 350.0,
+              expandedHeight: 200.0,
               flexibleSpace: FlexibleSpaceBar(
                 background: getImage(),
               ),
             ),
             SliverFixedExtentList(
-              itemExtent: 200.00,
+              itemExtent: 150.00,
               delegate: SliverChildListDelegate([
                // buildSelectedDetails(context, widget.trip),
-                const SizedBox(height: 60.0),
+                const SizedBox(height: 10.0),
                 buildButtons(),
               ]),
             )
@@ -71,7 +71,7 @@ class _bookingConfirmationState extends State<bookingConfirmation> {
 //          ),
 //        ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.60,
+          width: MediaQuery.of(context).size.width * 0.90,
           height: 100,
           child: MaterialButton(
             height: 140.0,
@@ -89,7 +89,7 @@ class _bookingConfirmationState extends State<bookingConfirmation> {
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.60,
+          width: MediaQuery.of(context).size.width * 0.80,
           child: RaisedButton(
             child: Text('Comfirm'),
             color: Colors.amberAccent,
