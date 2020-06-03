@@ -7,6 +7,7 @@ import 'package:my_app/screens/manageQueue.dart';
 import 'package:my_app/screens/customerDashboard.dart';
 import 'package:my_app/screens/moreTab.dart';
 import 'package:my_app/screens/personalCustomerDashboard.dart';
+import 'package:my_app/screens/shopListView.dart';
 
 class landingScreen extends StatefulWidget {
   @override
@@ -38,8 +39,8 @@ class _landingScreenState extends State<landingScreen> {
         body: TabNavigator(
           key: _tabNavigator,
           tabs: <TabItem>[
-            TabItem(_tab1, personalCustomerDashboard()),
-            TabItem(_tab2, QRScan()),
+            TabItem(_tab1, customerDashboard()),
+            TabItem(_tab2, shopListView()),
             TabItem(_tab3, bookQueue()),
             TabItem(_tab4, bookForSomeone()),
           ],

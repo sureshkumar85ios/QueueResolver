@@ -38,6 +38,8 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+  http: '0.12.1'
+
 
 # The following section is specific to Flutter.
 flutter:

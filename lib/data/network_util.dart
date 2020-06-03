@@ -1,6 +1,51 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/Users.dart';
+import 'ShopList.dart';
+
+class Services {
+  static const String url = 'https://jsonplaceholder.typicode.com/users';
+  static const String shop_url =  'https://queue-keeper.herokuapp.com/api/v1/Company';
+
+  static Future<List<Users>> getUsers() async {
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<Users> list = parseUsers(response.body);
+        return list;
+      } else {
+        throw Exception("Error");
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  static List<Users> parseUsers(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Users>((json) => Users.fromJson(json)).toList();
+  }
+
+  static Future<List<ShopList>> getShopList() async {
+    try {
+      final response = await http.get(shop_url);
+      if (response.statusCode == 200) {
+        List<ShopList> list = parseShopList(response.body);
+        return list;
+      } else {
+        throw Exception("Error");
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  static List<ShopList> parseShopList(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<ShopList>((json) => Users.fromJson(json)).toList();
+  }
+}
 
 class NetworkUtil {
   // next three lines makes this class a Singleton
