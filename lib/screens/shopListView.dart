@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/data/ShopList.dart';
-import 'package:my_app/models/Users.dart';
+import 'package:my_app/screens/bookingConfirmation.dart';
 import 'dart:async';
-import '../models/Users.dart';
 import '../data/network_util.dart';
 
 class shopListView extends StatefulWidget {
   shopListView() : super();
 
-  final String title = "Filter List Demo";
+  final String title = 'Near by shops';
 
   @override
   shopListViewState createState() => shopListViewState();
@@ -34,6 +33,10 @@ class shopListViewState extends State<shopListView> {
   final _debouncer = Debouncer(milliseconds: 500);
   List<ShopList> shopListArray = List();
   List<ShopList> filteredShopsArray = List();
+  List<ShopList> selectedArray;
+
+  var color1 = Color(0xFFa572c0);
+  var color2 = Color(0xFF6559d4);
 
   @override
   void initState() {
@@ -52,6 +55,7 @@ class shopListViewState extends State<shopListView> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
           TextField(
@@ -78,7 +82,32 @@ class shopListViewState extends State<shopListView> {
               itemCount: filteredShopsArray.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  child: Padding(
+
+                  child:InkWell(
+                    onTap: () {
+                      // Function is executed on tap.
+                      setState(() {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => bookingConfirmation(),
+                            settings: RouteSettings(
+                              arguments: filteredShopsArray[index],
+                            )
+                          ),
+                        );
+                      });
+                    },
+                child: Container(
+                height: 80.0,
+                width: 60.0,
+                decoration: BoxDecoration(
+                gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [color1, color2])),
+                child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -88,9 +117,10 @@ class shopListViewState extends State<shopListView> {
                           filteredShopsArray[index].companyName,
                           style: TextStyle(
                             fontSize: 16.0,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
+
                         SizedBox(
                           height: 5.0,
                         ),
@@ -98,11 +128,13 @@ class shopListViewState extends State<shopListView> {
                           filteredShopsArray[index].address.city,
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Colors.grey,
+                            color: Colors.white54,
                           ),
                         ),
                       ],
                     ),
+                  ),
+                ),
                   ),
                 );
               },

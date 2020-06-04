@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/data/ShopList.dart';
 
 
 class bookingConfirmation extends StatefulWidget {
+
+  //final List<ShopList> shopDetailListArray;
   @override
   _bookingConfirmationState createState() => _bookingConfirmationState();
+
 }
 
 var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 
 class _bookingConfirmationState extends State<bookingConfirmation> {
-  
+
   @override
   Widget build(BuildContext context) {
+    final ShopList shopDetailListArray =  ModalRoute.of(context).settings.arguments as ShopList;
     return Scaffold(
       body: Center(
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: Text(''),
+              title: Text(shopDetailListArray.companyName),
               backgroundColor: Colors.green,
               expandedHeight: 200.0,
               flexibleSpace: FlexibleSpaceBar(
@@ -115,6 +120,7 @@ class _bookingConfirmationState extends State<bookingConfirmation> {
     final imageUrl = "https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w";
     return Image.network(imageUrl, fit: BoxFit.cover);
   }}
+
 
 class Items {
   String title;
