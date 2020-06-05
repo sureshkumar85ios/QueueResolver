@@ -16,15 +16,19 @@ class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
-        body: Column(
+      body: SingleChildScrollView(
+          child: Column(
           children: <Widget>[
             SizedBox(height: 4.0,),
             UpperSection(),
             SizedBox(height: 4.0,),
             MiddleSection(),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -69,8 +73,8 @@ class MiddleSection extends StatelessWidget {
         children: <Widget>[
           Divider(height: 8.0,),
           ListTile(
-            title: Text("Queue status"),
-            subtitle: Text('it displays near 5 km radious, if you want to modify click edit button'),
+            title: Text(" Booked Queue's status"),
+            subtitle: Text("it displays your today's booked queus with estimation time"),
             trailing: ClipOval(
               child: Container(
                   height: 40.0,
@@ -87,7 +91,7 @@ class MiddleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 350.0,
+              height: 250.0,
               child: ListView(
                 padding: EdgeInsets.all(0.0),
                 scrollDirection: Axis.vertical,
@@ -96,8 +100,8 @@ class MiddleSection extends StatelessWidget {
                   SizedBox(height: 8.0,),
                   ItemCard(Icons.queue, 'Macro ', '60 mins' ),
                   SizedBox(height: 8.0,),
-                  ItemCard(Icons.queue, 'Woolworth', '35 mins'),
-                  SizedBox(height: 8.0,),
+                 // ItemCard(Icons.queue, 'Woolworth', '35 mins'),
+                 // SizedBox(height: 8.0,),
                 ],
               ),
             ),
@@ -151,7 +155,7 @@ class ItemCard extends StatelessWidget {
                           'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w'),
                       ),
                     ),
-                  SizedBox(width: 20.0),
+                  SizedBox(width: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -161,14 +165,17 @@ class ItemCard extends StatelessWidget {
                   )
                   ]
           ),
-              Column(
+              Wrap(
+                spacing: 5.0,
+                runSpacing: 5.0,
+                direction: Axis.vertical,
                 children: <Widget>[
                    Container(
-                    width: 120.0,
+                    width: 130.0,
                     height: 40.0,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(30.0),
+                      //color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(2.0),
                     ),
                     alignment: Alignment.center,
                     child: FlatButton(
@@ -182,9 +189,9 @@ class ItemCard extends StatelessWidget {
                       },
                       color: Colors.red[200],
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(2.0),
                       ),
-                      child: Text("Book Queue", style: TextStyle(color: Colors.white)),
+                      child: Text("Cancel", style: TextStyle(color: Colors.white)),
                     ),
                   )
                 ],
@@ -229,9 +236,18 @@ class UpperSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Icon(
-                    Icons.notifications,
-                    color: color1,
+                  IconButton(
+                    icon: Icon(
+                      Icons.eject,
+                      //color: Colors.white,
+                    ),
+                    iconSize: 30,
+                    tooltip: 'Logout application',
+                    color: Colors.purple,
+                    splashColor: Colors.purple,
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop(context);
+                    },
                   ),
                   Icon(
                     Icons.mode_edit,
@@ -259,7 +275,7 @@ class UpperSection extends StatelessWidget {
                 height: 9.0,
               ),
               Text(
-                'Macro wholesale Shop',
+                'I am feeling good.',
                 style: TextStyle(color: Colors.grey),
               )
             ],

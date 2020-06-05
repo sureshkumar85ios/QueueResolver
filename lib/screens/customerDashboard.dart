@@ -1,3 +1,5 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/QRScan.dart';
 
@@ -16,14 +18,17 @@ class _customerDashboardState extends State<customerDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
+      resizeToAvoidBottomPadding: false,
+      body: SingleChildScrollView(
+      child: Column(
           children: <Widget>[
-            SizedBox(height: 4.0,),
             UpperSection(),
             SizedBox(height: 4.0,),
             MiddleSection(),
           ],
-        ));
+        )
+    ),
+    );
   }
 }
 
@@ -156,19 +161,25 @@ class UpperSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(
-          height: 16.0,
-        ),
         Padding(
-          padding: EdgeInsets.all(32.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Icon(
-                    Icons.notifications,
-                    color: color1,
+                  IconButton(
+                    icon: Icon(
+                      Icons.eject,
+                      //color: Colors.white,
+                    ),
+                    iconSize: 30,
+                    tooltip: 'Logout application',
+                    color: Colors.purple,
+                    splashColor: Colors.purple,
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop(context);
+                    },
                   ),
                   Icon(
                     Icons.mode_edit,

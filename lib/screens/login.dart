@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:my_app/screens/Signup.dart';
 import 'package:my_app/screens/landingScreen.dart';
 import 'package:my_app/screens/signupUserSelection.dart';
+import 'package:my_app/screens/userLandingScreen.dart';
 import 'package:my_app/utilities/styles.dart';
 import 'package:my_app/data/service/Fieldvalidation_services.dart';
 
@@ -177,13 +178,20 @@ void _showAlertforsignin(){
         onPressed: () {
            if (_key.currentState.validate()  ){
            
-            if(_emailController.text == "123" && _passwordController.text == "123"){
+            if(_emailController.text == "user" && _passwordController.text == "user"){
                 print('Login Button Pressed');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (BuildContext context) => landingScreen()),
+                  MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),
                 );          
            }
+            else if(_emailController.text == "shop" && _passwordController.text == "shop"){
+              print('Login Button Pressed');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) => landingScreen()),
+              );
+            }
            else 
            {
               _showAlertforsignin();

@@ -5,7 +5,7 @@ import '../models/Users.dart';
 import 'ShopList.dart';
 
 class Services {
-  static const String shop_url = 'https://queue-keeper.herokuapp.com/api/v1/Company';
+  static const String shop_url = 'https://queue-keeper.herokuapp.com/api/v1/company';
 
   static Future<List<ShopList>> getShopList() async {
     try {

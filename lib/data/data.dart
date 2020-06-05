@@ -59,7 +59,7 @@ List<SliderModel> getSlides(){
 
   //3
   sliderModel.setDesc("Help queues move quicker so that customers aren’t waiting any longer than the recommended 15 minutes waiting time.");
-  sliderModel.setTitle("QUICKER QUEUE TIMES");
+  sliderModel.setTitle("Quicker Queue Times");
   sliderModel.setImageAssetPath("assets/images/Queue_3.png");
   slides.add(sliderModel);
 

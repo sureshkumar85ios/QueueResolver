@@ -1,7 +1,7 @@
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_app/Helper/qrgenerate.dart';
+import 'package:my_app/Helper/scan.dart';
 import 'package:my_app/screens/QRScan.dart';
 import 'package:my_app/screens/bookForSomeone.dart';
 import 'package:my_app/screens/manageQueue.dart';
@@ -10,12 +10,12 @@ import 'package:my_app/screens/moreTab.dart';
 import 'package:my_app/screens/personalCustomerDashboard.dart';
 import 'package:my_app/screens/shopListView.dart';
 
-class landingScreen extends StatefulWidget {
+class userLandingScreen extends StatefulWidget {
   @override
-  _landingScreenState createState() => _landingScreenState();
+  _userLandingScreenState createState() => _userLandingScreenState();
 }
 
-class _landingScreenState extends State<landingScreen> {
+class _userLandingScreenState extends State<userLandingScreen> {
   final _tabNavigator = GlobalKey<TabNavigatorState>();
   final _tab1 = GlobalKey<NavigatorState>();
   final _tab2 = GlobalKey<NavigatorState>();
@@ -40,9 +40,9 @@ class _landingScreenState extends State<landingScreen> {
         body: TabNavigator(
           key: _tabNavigator,
           tabs: <TabItem>[
-            TabItem(_tab1, customerDashboard()),
-            TabItem(_tab2, GenerateScreen()),
-            TabItem(_tab3, bookQueue()),
+            TabItem(_tab1, personalCustomerDashboard()),
+            TabItem(_tab2, ScanScreen()),
+            TabItem(_tab3, shopListView()),
             TabItem(_tab4, bookForSomeone()),
           ],
           selectedIndex: _tabSelectedIndex,
@@ -58,14 +58,14 @@ class _landingScreenState extends State<landingScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.photo_camera),
-              title: const Text('Generate QR'),
+              title: const Text('QR Scan'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.queue),
               title: const Text('ManageQueue'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.child_friendly),
+              icon: Icon(Icons.more_horiz),
               title: const Text('Book For Someone'),
             ),
           ],

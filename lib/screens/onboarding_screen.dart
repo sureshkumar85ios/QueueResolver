@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                 splashColor: Colors.blue[50],
                 child: Text(
                   "SKIP",
-                  style: TextStyle(color: Color(0xFF0074E4), fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                 ),
               ),
               Container(
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
                 splashColor: Colors.blue[50],
                 child: Text(
                   "NEXT",
-                  style: TextStyle(color: Color(0xFF0074E4), fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
                 ),
               ),
             ],
