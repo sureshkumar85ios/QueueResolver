@@ -66,7 +66,7 @@ class _userLandingScreenState extends State<userLandingScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.more_horiz),
-              title: const Text('Book For Someone'),
+              title: const Text('Settings'),
             ),
           ],
         ),

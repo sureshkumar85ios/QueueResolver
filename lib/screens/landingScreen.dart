@@ -65,8 +65,8 @@ class _landingScreenState extends State<landingScreen> {
               title: const Text('ManageQueue'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.child_friendly),
-              title: const Text('Book For Someone'),
+              icon: Icon(Icons.accessible),
+              title: const Text('Booking Assistance'),
             ),
           ],
         ),

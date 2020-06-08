@@ -71,10 +71,10 @@ class MiddleSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: <Widget>[
-          Divider(height: 8.0,),
+          Divider(height: 9.0,),
           ListTile(
             title: Text("Today's status"),
-            subtitle: Text('31 queue completed in 5 hours'),
+            subtitle: Text('250 completed in 5 hours'),
             trailing: ClipOval(
               child: Container(
                   height: 40.0,
@@ -87,21 +87,25 @@ class MiddleSection extends StatelessWidget {
                   )),
             ),
           ),
-          SizedBox(height: 8.0,),
+          SizedBox(height: 7.0,),
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 350.0,
+              height: 270.0,
               child: ListView(
                 padding: EdgeInsets.all(0.0),
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
-                  ItemCard(Icons.closed_caption, 'Completed', '20 queues'),
-                  SizedBox(height: 8.0,),
-                  ItemCard(Icons.queue, 'Current Queue', '50' ),
-                  SizedBox(height: 8.0,),
-                  ItemCard(Icons.queue, 'time interval per queue', '5 mins'),
-                  SizedBox(height: 8.0,),
+                  ItemCard(Icons.closed_caption, 'Completed', '250'),
+                  SizedBox(height: 7.0,),
+                  ItemCard(Icons.queue, 'Current in Queue', '50' ),
+                  SizedBox(height: 7.0,),
+                  ItemCard(Icons.queue, 'Time interval set per customre', '5 mins'),
+                  SizedBox(height: 7.0,),
+                  ItemCard(Icons.queue, 'Time Slot set in mins', '20'),
+                  SizedBox(height: 7.0,),
+                  ItemCard(Icons.queue, 'Max number number allowed outside in queue', '5'),
+                  SizedBox(height: 7.0,),
                 ],
               ),
             ),
@@ -191,14 +195,14 @@ class UpperSection extends StatelessWidget {
                 height: 8.0,
               ),
               CircleAvatar(
-                radius: 50.0,
-                backgroundImage: profileImage,
+                radius: 80.0,
+                backgroundImage: AssetImage('assets/images/Spar_palm_court.png'),
               ),
               SizedBox(
                 height: 8.0,
               ),
               Text(
-                'Arnold vosloo',
+                'SUPERSPAR',
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
@@ -207,7 +211,7 @@ class UpperSection extends StatelessWidget {
                 height: 9.0,
               ),
               Text(
-                'Macro wholesale Shop',
+                'Palm Court Superspar',
                 style: TextStyle(color: Colors.grey),
               )
             ],
