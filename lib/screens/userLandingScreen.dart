@@ -63,7 +63,7 @@ class _userLandingScreenState extends State<userLandingScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.queue),
-              title: const Text('ManageQueue'),
+              title: const Text('BookQueue'),
             ),
 //            BottomNavigationBarItem(
 //              icon: Icon(Icons.more),
