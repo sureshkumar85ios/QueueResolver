@@ -104,7 +104,7 @@ class MiddleSection extends StatelessWidget {
                   SizedBox(height: 7.0,),
                   ItemCard(Icons.queue, 'Time Slot set in mins', '20'),
                   SizedBox(height: 7.0,),
-                  ItemCard(Icons.queue, 'Max number number allowed outside in queue', '5'),
+                  ItemCard(Icons.queue, 'Max number number outside in queue', '5'),
                   SizedBox(height: 7.0,),
                 ],
               ),

@@ -13,7 +13,7 @@ class _bookQueueState extends State<bookQueue> {
       title: "Start Queue",
       subtitle: "Queue Start at",
       event: "10 am",
-      img: "assets/images/bookQueue.png");
+      img: "assets/images/start_q.png");
 
   Items item2 = new Items(
     title: "Stop Queue",

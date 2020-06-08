@@ -14,10 +14,10 @@ var color2 = Color(0xFF6559d4);
 class _bookForSomeoneState extends State<bookForSomeone> {
 
   Items item1 = new Items(
-      title: "Profile Settings",
+      title: "Book Queue",
       subtitle: "Approximate time is around",
       event: "20 mins",
-      img: "assets/images/bookQueue.png");
+      img: "assets/images/start_q.png");
   Items item2 = new Items(
       title: "Cancel Queue",
       subtitle: "Remaining Time is",

@@ -69,10 +69,10 @@ class MiddleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         children: <Widget>[
-          Divider(height: 8.0,),
+          Divider(height: 5.0,),
           ListTile(
             title: Text(" Booked Queue's status"),
             subtitle: Text("it displays your today's booked queus with estimation time"),
@@ -99,14 +99,14 @@ class MiddleSection extends StatelessWidget {
                 children: <Widget>[
                   
                   ItemCard(
-                    AssetImage('assets/images/Spar_palm_court.png'), 'Superspar-Palm', '10 mins'),
+                    AssetImage('assets/images/Spar_palm_court.png'), 'Superspar', '10 mins'),
                   SizedBox(height: 7.0,),
                   //ItemCard(Icons.closed_caption, 'Pick and Pay', '40 mins'),
                   //SizedBox(height: 8.0,),
                   ItemCard(AssetImage('assets/images/makro.png'), 'makro ', '30 mins' ),
                   
                   SizedBox(height: 7.0,),
-                  ItemCard(AssetImage('assets/images/makro.png'), 'Dr. John Smith', '55 mins'),
+                  ItemCard(AssetImage('assets/images/makro.png'), 'Dr.Smith', '55 mins'),
                   SizedBox(height: 7.0,),
                 ],
               ),
