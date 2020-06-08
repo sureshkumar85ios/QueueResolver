@@ -43,13 +43,14 @@ class _userLandingScreenState extends State<userLandingScreen> {
             TabItem(_tab1, personalCustomerDashboard()),
             TabItem(_tab2, ScanScreen()),
             TabItem(_tab3, shopListView()),
-            TabItem(_tab4, bookForSomeone()),
+            //TabItem(_tab4, bookForSomeone()),
           ],
           selectedIndex: _tabSelectedIndex,
           popStack: _tabPopStack,
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _tabSelectedIndex,
+          fixedColor: Colors.white,
           onTap: _setIndex,
           items: [
             BottomNavigationBarItem(
@@ -64,10 +65,10 @@ class _userLandingScreenState extends State<userLandingScreen> {
               icon: Icon(Icons.queue),
               title: const Text('ManageQueue'),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.more_horiz),
-              title: const Text('Settings'),
-            ),
+//            BottomNavigationBarItem(
+//              icon: Icon(Icons.more),
+//              title: const Text('More'),
+//            ),
           ],
         ),
       ),

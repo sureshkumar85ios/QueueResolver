@@ -11,7 +11,7 @@ class customerDashboard extends StatefulWidget {
 var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
-    'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
+    'https://logos-download.com/wp-content/uploads/2016/06/Spar_logo_white_background.png?format=1000w');
 
 class _customerDashboardState extends State<customerDashboard> {
   @override
@@ -71,10 +71,10 @@ class MiddleSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: <Widget>[
-          Divider(height: 9.0,),
+          Divider(height: 8.0,),
           ListTile(
             title: Text("Today's status"),
-            subtitle: Text('250 completed in 5 hours'),
+            subtitle: Text('31 queue completed in 5 hours'),
             trailing: ClipOval(
               child: Container(
                   height: 40.0,
@@ -87,25 +87,21 @@ class MiddleSection extends StatelessWidget {
                   )),
             ),
           ),
-          SizedBox(height: 7.0,),
+          SizedBox(height: 8.0,),
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 270.0,
+              height: 350.0,
               child: ListView(
                 padding: EdgeInsets.all(0.0),
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
-                  ItemCard(Icons.closed_caption, 'Completed', '250'),
-                  SizedBox(height: 7.0,),
-                  ItemCard(Icons.queue, 'Current in Queue', '50' ),
-                  SizedBox(height: 7.0,),
-                  ItemCard(Icons.queue, 'Time interval set per customre', '5 mins'),
-                  SizedBox(height: 7.0,),
-                  ItemCard(Icons.queue, 'Time Slot set in mins', '20'),
-                  SizedBox(height: 7.0,),
-                  ItemCard(Icons.queue, 'Max number number outside in queue', '5'),
-                  SizedBox(height: 7.0,),
+                  ItemCard(Icons.closed_caption, 'Completed', '20 queues'),
+                  SizedBox(height: 8.0,),
+                  ItemCard(Icons.queue, 'Current Queue', '50' ),
+                  SizedBox(height: 8.0,),
+                  ItemCard(Icons.queue, 'time interval per queue', '5 mins'),
+                  SizedBox(height: 8.0,),
                 ],
               ),
             ),
@@ -195,14 +191,14 @@ class UpperSection extends StatelessWidget {
                 height: 8.0,
               ),
               CircleAvatar(
-                radius: 80.0,
-                backgroundImage: AssetImage('assets/images/Spar_palm_court.png'),
+                radius: 50.0,
+                backgroundImage: AssetImage("assets/images/spar.png"),
               ),
               SizedBox(
                 height: 8.0,
               ),
               Text(
-                'SUPERSPAR',
+                'Spar Norwood',
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
@@ -211,7 +207,7 @@ class UpperSection extends StatelessWidget {
                 height: 9.0,
               ),
               Text(
-                'Palm Court Superspar',
+                '71 Grant Ave, Norwood, Johannesburg',
                 style: TextStyle(color: Colors.grey),
               )
             ],

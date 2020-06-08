@@ -33,10 +33,16 @@ class _bookQueueState extends State<bookQueue> {
     event: "",
     img: "assets/images/todo.png",
   );
+  Items item5 = Items(
+    title: "Queue Settings",
+    subtitle: "Can modify Queue Settings",
+    event: "",
+    img: "assets/images/setting.png",
+  );
 
   @override
   Widget build(BuildContext context) {
-    List<Items> myList = [item1, item2, item3, item4,];
+    List<Items> myList = [item1, item2, item3, item4,item5];
     var color = 0xff453658;
     return Container(
       color: Colors.white,

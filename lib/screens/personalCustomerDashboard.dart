@@ -9,7 +9,6 @@ class personalCustomerDashboard extends StatefulWidget {
 
 var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
-var backimage ='';
 var profileImage = NetworkImage(
     'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
 
@@ -69,10 +68,10 @@ class MiddleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: <Widget>[
-          Divider(height: 5.0,),
+          Divider(height: 8.0,),
           ListTile(
             title: Text(" Booked Queue's status"),
             subtitle: Text("it displays your today's booked queus with estimation time"),
@@ -88,26 +87,21 @@ class MiddleSection extends StatelessWidget {
                   )),
             ),
           ),
-          SizedBox(height: 7.0,),
+          SizedBox(height: 8.0,),
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 280.0,
+              height: 250.0,
               child: ListView(
                 padding: EdgeInsets.all(0.0),
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
-                  
-                  ItemCard(
-                    AssetImage('assets/images/Spar_palm_court.png'), 'Superspar', '10 mins'),
-                  SizedBox(height: 7.0,),
-                  //ItemCard(Icons.closed_caption, 'Pick and Pay', '40 mins'),
-                  //SizedBox(height: 8.0,),
-                  ItemCard(AssetImage('assets/images/makro.png'), 'makro ', '30 mins' ),
-                  
-                  SizedBox(height: 7.0,),
-                  ItemCard(AssetImage('assets/images/makro.png'), 'Dr.Smith', '55 mins'),
-                  SizedBox(height: 7.0,),
+                  ItemCard('SPAR', 'Est Time : 20 mins', 'spar.png'),
+                  SizedBox(height: 8.0,),
+                  ItemCard('Makro ', 'Est Time : 60 mins','Makro.png'),
+                  SizedBox(height: 8.0,),
+                 // ItemCard(Icons.queue, 'Woolworth', '35 mins'),
+                 // SizedBox(height: 8.0,),
                 ],
               ),
             ),
@@ -119,14 +113,13 @@ class MiddleSection extends StatelessWidget {
 }
 
 class ItemCard extends StatelessWidget {
-  final icon;
   final name;
   final tasks;
+  final image;
   const ItemCard(
-
-      this.icon,
       this.name,
-      this.tasks
+      this.tasks,
+      this.image,
       );
   @override
   Widget build(BuildContext context) {
@@ -151,21 +144,23 @@ class ItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                   Container(
-                    width: 55,
-                    height: 55,
-                    //color: Colors.white,
-                    child:CircleAvatar(
-                    backgroundColor:Colors.green,
-                      //foregroundColor: Colors.yellow,
-                    backgroundImage:AssetImage(backimage)
-                    ,)
-                     
+                    width: 45,
+                    height: 45,
+                    //color: Colors.green,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.green,
+                        backgroundImage: AssetImage('assets/images/$image',),
+                    ),
                     ),
                   SizedBox(width: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+                      const SizedBox(height: 5),
                       Text(name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                      const SizedBox(height: 5),
                       Text(tasks, style: TextStyle(color: Colors.white.withOpacity(0.6)),),
                     ],
                   )
@@ -186,12 +181,12 @@ class ItemCard extends StatelessWidget {
                     alignment: Alignment.center,
                     child: FlatButton(
                       onPressed: () {
-                        print('Login Button Pressed');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => bookingConfirmation()),
-                        );
+                        //print('Login Button Pressed');
+//                        Navigator.push(
+//                          context,
+//                          MaterialPageRoute(
+//                              builder: (BuildContext context) => bookingConfirmation()),
+//                        );
                       },
                       color: Colors.red[200],
                       shape: RoundedRectangleBorder(
