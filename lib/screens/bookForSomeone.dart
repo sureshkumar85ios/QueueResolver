@@ -19,7 +19,7 @@ class _bookForSomeoneState extends State<bookForSomeone> {
       event: "20 mins",
       img: "assets/images/start_q.png");
   Items item2 = new Items(
-      title: "Cancel Queue",
+      title: "Booked Queues",
       subtitle: "Remaining Time is",
       event: "40 mins",
       img: "assets/images/bookQueue.png");

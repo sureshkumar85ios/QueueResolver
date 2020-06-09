@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:my_app/screens/QRScan.dart';
 import 'package:my_app/screens/bookingConfirmation.dart';
 
@@ -91,14 +92,14 @@ class MiddleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 250.0,
+              height: 350.0,
               child: ListView(
                 padding: EdgeInsets.all(0.0),
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
                   ItemCard('SPAR', 'Est Time : 20 mins', 'spar.png'),
                   SizedBox(height: 8.0,),
-                  ItemCard('Makro ', 'Est Time : 60 mins','Makro.png'),
+                  ItemCard('Makro ', 'Est Time : 60 mins','makro.png'),
                   SizedBox(height: 8.0,),
                  // ItemCard(Icons.queue, 'Woolworth', '35 mins'),
                  // SizedBox(height: 8.0,),
@@ -126,16 +127,20 @@ class ItemCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: Container(
-//        height: 80.0,
-//        width: 80.0,
+        //    padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+//    decoration: BoxDecoration(
+//      color: Colors.white,
+//      borderRadius: BorderRadius.circular(18),
+//    ),
         decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
             gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [color1, color2])),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -166,37 +171,56 @@ class ItemCard extends StatelessWidget {
                   )
                   ]
           ),
-              Wrap(
-                spacing: 5.0,
-                runSpacing: 5.0,
-                direction: Axis.vertical,
-                children: <Widget>[
-                   Container(
-                    width: 130.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      //color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(2.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: FlatButton(
-                      onPressed: () {
-                        //print('Login Button Pressed');
-//                        Navigator.push(
-//                          context,
-//                          MaterialPageRoute(
-//                              builder: (BuildContext context) => bookingConfirmation()),
-//                        );
-                      },
-                      color: Colors.red[200],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.0),
-                      ),
-                      child: Text("Cancel", style: TextStyle(color: Colors.white)),
-                    ),
-                  )
-                ],
+              SizedBox(
+                height: 8.0,
               ),
+              Divider(
+                color: Colors.grey[200],
+                height: 3,
+                thickness: 1,
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _iconBuilder(LineAwesomeIcons.check_circle, 'Check-in'),
+                  _iconBuilder(LineAwesomeIcons.times_circle, 'Cancel'),
+                  _iconBuilder(LineAwesomeIcons.compass, 'Directions'),
+                ],
+              )
+//              Wrap(
+//                spacing: 5.0,
+//                runSpacing: 5.0,
+//                direction: Axis.vertical,
+//                children: <Widget>[
+//                   Container(
+//                    width: 130.0,
+//                    height: 40.0,
+//                    decoration: BoxDecoration(
+//                      //color: Theme.of(context).primaryColor,
+//                      borderRadius: BorderRadius.circular(2.0),
+//                    ),
+//                    alignment: Alignment.center,
+//                    child: FlatButton(
+//                      onPressed: () {
+//                        //print('Login Button Pressed');
+////                        Navigator.push(
+////                          context,
+////                          MaterialPageRoute(
+////                              builder: (BuildContext context) => bookingConfirmation()),
+////                        );
+//                      },
+//                      color: Colors.red[200],
+//                      shape: RoundedRectangleBorder(
+//                        borderRadius: BorderRadius.circular(2.0),
+//                      ),
+//                      child: Text("Cancel", style: TextStyle(color: Colors.white)),
+//                    ),
+//                  )
+//                ],
+//              ),
 //              Column(
 //                //alignment: Alignment.topRight,
 //                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
@@ -217,7 +241,115 @@ class ItemCard extends StatelessWidget {
   }
 }
 
-
+//Container _bookingCard() {
+//  final name;
+//  final tasks;
+//  final image;
+//  const _bookingCard(
+//    this.name,
+//    this.tasks,
+//    this.image,
+//  );
+//
+//  return Container(
+//    padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+//    decoration: BoxDecoration(
+//      color: Colors.white,
+//      borderRadius: BorderRadius.circular(18),
+//    ),
+//    child: Column(
+//      children: <Widget>[
+//        Row(
+//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//          children: <Widget>[
+//            CircleAvatar(
+//              backgroundColor: Color(0xFFD9D9D9),
+//              backgroundImage: NetworkImage(USER_IMAGE),
+//              radius: 36.0,
+//            ),
+//            RichText(
+//              text: TextSpan(
+//                text: 'Dr Dan MlayahFX',
+//                style: TextStyle(
+//                  color: Colors.black,
+//                  fontSize: 16,
+//                  fontWeight: FontWeight.w600,
+//                  height: 1.5,
+//                ),
+//                children: <TextSpan>[
+//                  TextSpan(
+//                    text: '\nSunday,May 5th at 8:00 PM',
+//                    style: TextStyle(
+//                      color: Colors.black45,
+//                      fontWeight: FontWeight.w400,
+//                      fontSize: 15,
+//                    ),
+//                  ),
+//                  TextSpan(
+//                    text: '\n570 Kyemmer Stores \nNairobi Kenya C -54 Drive',
+//                    style: TextStyle(
+//                      color: Colors.black38,
+//                      fontWeight: FontWeight.w400,
+//                      fontSize: 14,
+//                    ),
+//                  ),
+//                ],
+//              ),
+//            ),
+//            Align(
+//              alignment: Alignment.bottomRight,
+//              child: Icon(
+//                Icons.arrow_forward_ios,
+//                color: Colors.grey[400],
+//              ),
+//            ),
+//          ],
+//        ),
+//        SizedBox(
+//          height: 8.0,
+//        ),
+//        Divider(
+//          color: Colors.grey[200],
+//          height: 3,
+//          thickness: 1,
+//        ),
+//        SizedBox(
+//          height: 8.0,
+//        ),
+//        Row(
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: <Widget>[
+//            _iconBuilder(LineAwesomeIcons.check_circle, 'Check-in'),
+//            _iconBuilder(LineAwesomeIcons.times_circle, 'Cancel'),
+//            _iconBuilder(LineAwesomeIcons.compass, 'Directions'),
+//          ],
+//        )
+//      ],
+//    ),
+//  );
+//}
+Column _iconBuilder(icon, title) {
+  return Column(
+    children: <Widget>[
+      Icon(
+        icon,
+        size: 28,
+        color: Colors.white,
+      ),
+      SizedBox(
+        height: 8.0,
+      ),
+      Text(
+        title,
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w300,
+          color: Colors.white,
+        ),
+      ),
+    ],
+  );
+}
 class UpperSection extends StatelessWidget {
   const UpperSection({
     Key key,
