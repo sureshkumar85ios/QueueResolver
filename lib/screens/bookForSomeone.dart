@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/screens/bookedAssistanceQueues.dart';
+
+import 'bookForSomeoneEntry.dart';
 
 
 class bookForSomeone extends StatefulWidget {
@@ -37,7 +40,18 @@ class _bookForSomeoneState extends State<bookForSomeone> {
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: myList.map((data) {
-            return Container(
+            return GestureDetector(
+                onTap: (){
+                  print(data.title);
+                  if(data.title == 'Book Queue') {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => bookForSomeoneEntry()));
+                  }
+                  else
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => bookedAssistanceQueues()));
+                },
+                child: Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topRight,
@@ -89,7 +103,8 @@ class _bookForSomeoneState extends State<bookForSomeone> {
                   ),
                 ],
               ),
-            );
+            )
+                );
           }).toList()),
     );
   }

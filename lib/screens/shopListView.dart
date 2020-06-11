@@ -120,11 +120,19 @@ class shopListViewState extends State<shopListView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          CircleAvatar(
-                            backgroundColor: Color(0xFFD9D9D9),
-                            backgroundImage: NetworkImage(USER_IMAGE),
-                            radius: 36.0,
+                          ClipRRect(
+                            child: Image.network(
+                              filteredShopsArray[index].logo,
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.contain,
+                            ),
                           ),
+//                          CircleAvatar(
+//                            backgroundColor: Color(0xFFD9D9D9),
+//                            backgroundImage: NetworkImage(filteredShopsArray[index].logo),
+//                            radius: 36.0,
+//                          ),
                           SizedBox(
                             width: 10.0,
                           ),

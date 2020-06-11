@@ -14,10 +14,9 @@ class ShopList {
     this.cellphoneNumber,
     this.companyName,
     this.contactPerson,
-    this.dateCreated,
     this.emailAddress,
     this.id,
-    this.isCompanyActive,
+    this.logo,
     this.phone,
     this.websiteUrl,
   });
@@ -26,10 +25,9 @@ class ShopList {
   String cellphoneNumber;
   String companyName;
   ContactPerson contactPerson;
-  DateTime dateCreated;
   String emailAddress;
   int id;
-  bool isCompanyActive;
+  String logo;
   String phone;
   String websiteUrl;
 
@@ -38,10 +36,9 @@ class ShopList {
     cellphoneNumber: json["cellphoneNumber"],
     companyName: json["companyName"],
     contactPerson: ContactPerson.fromJson(json["contactPerson"]),
-    //dateCreated: DateTime.parse(json["dateCreated"]),
     emailAddress: json["emailAddress"],
-    //id: json["id"],
-    isCompanyActive: json["isCompanyActive"],
+    id: json["id"],
+    logo: json["logo"],
     phone: json["phone"],
     websiteUrl: json["websiteUrl"],
   );
@@ -51,10 +48,9 @@ class ShopList {
     "cellphoneNumber": cellphoneNumber,
     "companyName": companyName,
     "contactPerson": contactPerson.toJson(),
-    //"dateCreated": dateCreated.toIso8601String(),
     "emailAddress": emailAddress,
     "id": id,
-    "isCompanyActive": isCompanyActive,
+    "logo": logo,
     "phone": phone,
     "websiteUrl": websiteUrl,
   };
@@ -75,7 +71,7 @@ class Address {
   String addresLine2;
   String addressLine;
   String city;
-  DateTime dateCreated;
+  String dateCreated;
   int id;
   String locationPin;
   String postalCode;
@@ -85,7 +81,7 @@ class Address {
     addresLine2: json["addresLine2"],
     addressLine: json["addressLine"],
     city: json["city"],
-    //dateCreated: DateTime.parse(json["dateCreated"]),
+    dateCreated: json["dateCreated"],
     id: json["id"],
     locationPin: json["locationPin"],
     postalCode: json["postalCode"],
@@ -96,7 +92,7 @@ class Address {
     "addresLine2": addresLine2,
     "addressLine": addressLine,
     "city": city,
-    //"dateCreated": dateCreated.toIso8601String(),
+    "dateCreated": dateCreated,
     "id": id,
     "locationPin": locationPin,
     "postalCode": postalCode,
@@ -108,7 +104,6 @@ class ContactPerson {
   ContactPerson({
     this.address,
     this.cellphoneNumber,
-    this.dateCreated,
     this.emailAddress,
     this.id,
     this.idNumber,
@@ -118,7 +113,6 @@ class ContactPerson {
 
   Address address;
   String cellphoneNumber;
-  DateTime dateCreated;
   String emailAddress;
   int id;
   String idNumber;
@@ -128,7 +122,6 @@ class ContactPerson {
   factory ContactPerson.fromJson(Map<String, dynamic> json) => ContactPerson(
     address: Address.fromJson(json["address"]),
     cellphoneNumber: json["cellphoneNumber"],
-    //dateCreated: DateTime.parse(json["dateCreated"]),
     emailAddress: json["emailAddress"],
     id: json["id"],
     idNumber: json["idNumber"],
@@ -139,7 +132,6 @@ class ContactPerson {
   Map<String, dynamic> toJson() => {
     "address": address.toJson(),
     "cellphoneNumber": cellphoneNumber,
-   // "dateCreated": dateCreated.toIso8601String(),
     "emailAddress": emailAddress,
     "id": id,
     "idNumber": idNumber,
