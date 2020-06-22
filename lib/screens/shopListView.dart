@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:my_app/data/ShopList.dart';
+import 'package:my_app/data/bookQueueResponse.dart';
 import 'package:my_app/screens/bookingConfirmation.dart';
+import 'package:my_app/utilities/AlertUtil.dart';
 import 'package:my_app/utilities/styles.dart';
 import 'dart:async';
 import '../data/network_util.dart';
+import '../login_rest_ds.dart';
 
 class shopListView extends StatefulWidget {
   shopListView() : super();
@@ -36,6 +39,7 @@ class shopListViewState extends State<shopListView> {
   List<ShopList> shopListArray = List();
   List<ShopList> filteredShopsArray = List();
   List<ShopList> selectedArray;
+  String message ='';
 
   var color1 = Color(0xFFa572c0);
   var color2 = Color(0xFF6559d4);
@@ -181,7 +185,15 @@ class shopListViewState extends State<shopListView> {
                                 height: 6.0,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  setState(() {
+                                    message = 'please wait';
+                                  });
+                                  var shopId = filteredShopsArray[index].id;
+                                  final BookQueueResponse response  = await PostBookQueueCustomer(shopId.toString());
+                                  print('**BUTTON_CLICKED** : ' + response.queueNumber);
+                                  showAlertDialog(this.context,'Your have been booked the Queue',response.queueNumber);
+                                },
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(80.0)),
                                 padding: const EdgeInsets.all(0.0),

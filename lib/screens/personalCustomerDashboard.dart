@@ -1,24 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:my_app/data/bookQueueResponse.dart';
+import 'package:my_app/data/network_util.dart';
+import 'package:my_app/data/retriveQueueListResponse.dart';
 import 'package:my_app/screens/QRScan.dart';
 import 'package:my_app/screens/bookingConfirmation.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
+
+import '../login_rest_ds.dart';
 
 class personalCustomerDashboard extends StatefulWidget {
   @override
   _personalCustomerDashboardState createState() => _personalCustomerDashboardState();
 }
 
+List<RetriveQueueListResponse> shopListArray = List();
+List<RetriveQueueListResponse> filteredShopsArray = List();
+
+var username = StorageUtil.getString("username");
+
 var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
     'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
 
+
 class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
+
+  List<RetriveQueueListResponse> myList;
+  @override
+  void initState() {
+    super.initState();
+    Future<List<RetriveQueueListResponse>> response = Services.GetQueueList();
+    myList = response as List<RetriveQueueListResponse>;
+    print(myList[0]);
+//    Services.GetQueueList().then(List<RetriveQueueListResponse> myList {
+//
+//    });
+//    Services.GetQueueList().then((List<RetriveQueueListResponse> response) {
+//      setState(() {
+//        shopListArray = response;
+//        filteredShopsArray = shopListArray;
+//      });
+//    });
+//    print(filteredShopsArray);
+
+////  >P\]
+//{|
+// ]Services.GetQueueList =
+////      setState(() {
+////        var shopListArray = data.cast<RetriveQueueListResponse>();
+////        print(shopListArray);
+////
+////      });
+//    });
+   // final BookQueueResponse response  = await retriveQueueCustomer();
+//    retriveQueueCustomer().then(()
+//        {
+//
+//        });
+//
+//    print(response);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
+
       body: SingleChildScrollView(
           child: Column(
           children: <Widget>[
@@ -399,7 +448,7 @@ class UpperSection extends StatelessWidget {
                 height: 8.0,
               ),
               Text(
-                'Arnold vosloo',
+                StorageUtil.getString("username"),
                 style: TextStyle(
                   fontSize: 24.0,
                 ),

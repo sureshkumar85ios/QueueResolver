@@ -36,11 +36,14 @@ dependencies:
   barcode_scan: ^3.0.1
   qr_flutter: ^3.1.0
   esys_flutter_share: ^1.0.2
+  json_annotation: ^3.0.1
+  shared_preferences: ^0.5.7+3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  build_runner: ^1.10.0
+  json_serializable: ^3.3.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
   http: '0.12.1'

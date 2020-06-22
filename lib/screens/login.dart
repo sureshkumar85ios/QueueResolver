@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/data/loginResponse.dart';
+import 'package:my_app/login_rest_ds.dart';
 import 'package:my_app/screens/Signup.dart';
 import 'package:my_app/screens/landingScreen.dart';
 import 'package:my_app/screens/signupUserSelection.dart';
 import 'package:my_app/screens/userLandingScreen.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
 import 'package:my_app/utilities/styles.dart';
 import 'package:my_app/data/service/Fieldvalidation_services.dart';
+
+import '../data/network_util.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -14,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginResponse _user;
   bool _rememberMe = false;
   final _emailController =TextEditingController();
   final _passwordController =TextEditingController();
@@ -21,9 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _validate =false;
   GlobalKey<FormState>_key=new GlobalKey();
   String errormessage ='';
+  List<LoginResponse> loginResponseArray = List();
 
 
-   @override
+
+  @override
    void dispose(){
      _emailController.dispose();
      _passwordController.dispose();
@@ -175,10 +183,33 @@ void _showAlertforsignin(){
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {
-           if (_key.currentState.validate()  ){
-           
-            if(_emailController.text == "user" && _passwordController.text == "user"){
+        onPressed: () async{
+          await StorageUtil.getInstance();
+          if (_key.currentState.validate()  ){
+
+            setState(() {
+              message = 'please wait';
+            });
+           final String email = _emailController.text;
+           final String password = _passwordController.text;
+           final LoginResponse response  = await createUser(email, password);
+
+           setState(() {
+             _user = response;
+             print('**LOGIN_USER** : '+_user.username);
+             StorageUtil.putString("username",_user.username);
+             StorageUtil.putString("userid",_user.id.toString());
+             StorageUtil.putString("address",_user.person.address.toString());
+             var username = StorageUtil.getString("username");
+             print('**LOGIN_USER_Name** : '+username);
+           });
+           if(_user.id != null){
+             Navigator.push(
+               context,
+               MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),
+             );
+           }
+            else if(_emailController.text == "user" && _passwordController.text == "user"){
                 print('Login Button Pressed');
                 Navigator.push(
                   context,
