@@ -1,66 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:my_app/data/bookQueueResponse.dart';
+import 'package:my_app/data/fetchQueueList.dart';
 import 'package:my_app/data/network_util.dart';
-import 'package:my_app/data/retriveQueueListResponse.dart';
-import 'package:my_app/screens/QRScan.dart';
-import 'package:my_app/screens/bookingConfirmation.dart';
+import 'package:my_app/models/api_response.dart';
 import 'package:my_app/utilities/StorageUtil.dart';
-
-import '../login_rest_ds.dart';
 
 class personalCustomerDashboard extends StatefulWidget {
   @override
   _personalCustomerDashboardState createState() => _personalCustomerDashboardState();
 }
 
-List<RetriveQueueListResponse> shopListArray = List();
-List<RetriveQueueListResponse> filteredShopsArray = List();
-
 var username = StorageUtil.getString("username");
+bool _isLoading = false;
 
 var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
     'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
 
+APIResponse<List<fetchQueueList>> _apiResponse;
 
 class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
+  Services get service => GetIt.I<Services>();
 
-  List<RetriveQueueListResponse> myList;
+
   @override
   void initState() {
+    _fetchNotes();
     super.initState();
-    Future<List<RetriveQueueListResponse>> response = Services.GetQueueList();
-    myList = response as List<RetriveQueueListResponse>;
-    print(myList[0]);
-//    Services.GetQueueList().then(List<RetriveQueueListResponse> myList {
-//
-//    });
-//    Services.GetQueueList().then((List<RetriveQueueListResponse> response) {
-//      setState(() {
-//        shopListArray = response;
-//        filteredShopsArray = shopListArray;
-//      });
-//    });
-//    print(filteredShopsArray);
+  }
+  _fetchNotes() async {
+    setState(() {
+      _isLoading = true;
+    });
+    _apiResponse = await service.getNotesList();
+    print(_apiResponse.data.length);
 
-////  >P\]
-//{|
-// ]Services.GetQueueList =
-////      setState(() {
-////        var shopListArray = data.cast<RetriveQueueListResponse>();
-////        print(shopListArray);
-////
-////      });
-//    });
-   // final BookQueueResponse response  = await retriveQueueCustomer();
-//    retriveQueueCustomer().then(()
-//        {
-//
-//        });
-//
-//    print(response);
+    setState(() {
+      _isLoading = false;
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -142,18 +121,25 @@ class MiddleSection extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
               height: 350.0,
-              child: ListView(
-                padding: EdgeInsets.all(0.0),
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  ItemCard('SPAR', 'Est Time : 20 mins', 'spar.png'),
-                  SizedBox(height: 8.0,),
-                  ItemCard('Makro ', 'Est Time : 60 mins','makro.png'),
-                  SizedBox(height: 8.0,),
-                 // ItemCard(Icons.queue, 'Woolworth', '35 mins'),
-                 // SizedBox(height: 8.0,),
-                ],
-              ),
+
+                child: ListView.builder(
+                  itemCount:_apiResponse == null?1:_apiResponse.data.length,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(0),
+                  itemBuilder: (context, index){
+                    if (_isLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (_apiResponse.error) {
+                      return Center(child: Text(_apiResponse.errorMessage));
+                    }
+                    return ItemCard(
+                      _apiResponse.data[index].company.companyName,
+                      _apiResponse.data[index].totalInQueue.toString(),
+                      _apiResponse.data[index].company.logo,
+                    );
+                  },
+                )
             ),
           )
         ],
@@ -204,7 +190,7 @@ class ItemCard extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.green,
-                        backgroundImage: AssetImage('assets/images/$image',),
+                        backgroundImage: NetworkImage(image),
                     ),
                     ),
                   SizedBox(width: 10.0),
@@ -239,49 +225,6 @@ class ItemCard extends StatelessWidget {
                   _iconBuilder(LineAwesomeIcons.compass, 'Directions'),
                 ],
               )
-//              Wrap(
-//                spacing: 5.0,
-//                runSpacing: 5.0,
-//                direction: Axis.vertical,
-//                children: <Widget>[
-//                   Container(
-//                    width: 130.0,
-//                    height: 40.0,
-//                    decoration: BoxDecoration(
-//                      //color: Theme.of(context).primaryColor,
-//                      borderRadius: BorderRadius.circular(2.0),
-//                    ),
-//                    alignment: Alignment.center,
-//                    child: FlatButton(
-//                      onPressed: () {
-//                        //print('Login Button Pressed');
-////                        Navigator.push(
-////                          context,
-////                          MaterialPageRoute(
-////                              builder: (BuildContext context) => bookingConfirmation()),
-////                        );
-//                      },
-//                      color: Colors.red[200],
-//                      shape: RoundedRectangleBorder(
-//                        borderRadius: BorderRadius.circular(2.0),
-//                      ),
-//                      child: Text("Cancel", style: TextStyle(color: Colors.white)),
-//                    ),
-//                  )
-//                ],
-//              ),
-//              Column(
-//                //alignment: Alignment.topRight,
-//                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-//                C: FlatButton(
-//                  onPressed: () {},
-//                  color: Colors.red[200],
-//                  shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.circular(20.0),
-//                  ),
-//                  child: Text("Book Queue", style: TextStyle (color: Colors.white)),
-//                ),
-//              ),
           ],
               ),
     ),
@@ -290,93 +233,6 @@ class ItemCard extends StatelessWidget {
   }
 }
 
-//Container _bookingCard() {
-//  final name;
-//  final tasks;
-//  final image;
-//  const _bookingCard(
-//    this.name,
-//    this.tasks,
-//    this.image,
-//  );
-//
-//  return Container(
-//    padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
-//    decoration: BoxDecoration(
-//      color: Colors.white,
-//      borderRadius: BorderRadius.circular(18),
-//    ),
-//    child: Column(
-//      children: <Widget>[
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//          children: <Widget>[
-//            CircleAvatar(
-//              backgroundColor: Color(0xFFD9D9D9),
-//              backgroundImage: NetworkImage(USER_IMAGE),
-//              radius: 36.0,
-//            ),
-//            RichText(
-//              text: TextSpan(
-//                text: 'Dr Dan MlayahFX',
-//                style: TextStyle(
-//                  color: Colors.black,
-//                  fontSize: 16,
-//                  fontWeight: FontWeight.w600,
-//                  height: 1.5,
-//                ),
-//                children: <TextSpan>[
-//                  TextSpan(
-//                    text: '\nSunday,May 5th at 8:00 PM',
-//                    style: TextStyle(
-//                      color: Colors.black45,
-//                      fontWeight: FontWeight.w400,
-//                      fontSize: 15,
-//                    ),
-//                  ),
-//                  TextSpan(
-//                    text: '\n570 Kyemmer Stores \nNairobi Kenya C -54 Drive',
-//                    style: TextStyle(
-//                      color: Colors.black38,
-//                      fontWeight: FontWeight.w400,
-//                      fontSize: 14,
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-//            Align(
-//              alignment: Alignment.bottomRight,
-//              child: Icon(
-//                Icons.arrow_forward_ios,
-//                color: Colors.grey[400],
-//              ),
-//            ),
-//          ],
-//        ),
-//        SizedBox(
-//          height: 8.0,
-//        ),
-//        Divider(
-//          color: Colors.grey[200],
-//          height: 3,
-//          thickness: 1,
-//        ),
-//        SizedBox(
-//          height: 8.0,
-//        ),
-//        Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          children: <Widget>[
-//            _iconBuilder(LineAwesomeIcons.check_circle, 'Check-in'),
-//            _iconBuilder(LineAwesomeIcons.times_circle, 'Cancel'),
-//            _iconBuilder(LineAwesomeIcons.compass, 'Directions'),
-//          ],
-//        )
-//      ],
-//    ),
-//  );
-//}
 Column _iconBuilder(icon, title) {
   return Column(
     children: <Widget>[

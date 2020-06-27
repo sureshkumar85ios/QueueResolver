@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_app/screens/login.dart';
+import 'package:get_it/get_it.dart';
+import 'package:my_app/data/network_util.dart';
 import 'package:my_app/screens/onboarding_screen.dart';
 
 
 void main() {
+  setupLocator();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.dark,
@@ -13,6 +15,9 @@ void main() {
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
   runApp(MyApp());
+}
+void setupLocator() {
+  GetIt.I.registerLazySingleton(() => Services());
 }
 
 class MyApp extends StatelessWidget {

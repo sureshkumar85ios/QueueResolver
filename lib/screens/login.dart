@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController =TextEditingController();
   final _passwordController =TextEditingController();
   String message ='';
-  bool _validate =false;
+  bool _isLoading = false;
   GlobalKey<FormState>_key=new GlobalKey();
   String errormessage ='';
   List<LoginResponse> loginResponseArray = List();
@@ -174,9 +174,8 @@ void _showAlertforsignin(){
     );
   }
   );
-  
-  
 }
+
   Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -186,9 +185,11 @@ void _showAlertforsignin(){
         onPressed: () async{
           await StorageUtil.getInstance();
           if (_key.currentState.validate()  ){
-
             setState(() {
-              message = 'please wait';
+              _isLoading = true;
+              if (_isLoading) {
+                return Center(child: CircularProgressIndicator());
+              }
             });
            final String email = _emailController.text;
            final String password = _passwordController.text;
@@ -203,26 +204,22 @@ void _showAlertforsignin(){
              var username = StorageUtil.getString("username");
              print('**LOGIN_USER_Name** : '+username);
            });
-           if(_user.id != null){
-             Navigator.push(
-               context,
-               MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),
-             );
-           }
-            else if(_emailController.text == "user" && _passwordController.text == "user"){
-                print('Login Button Pressed');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),
-                );          
-           }
-            else if(_emailController.text == "shop" && _passwordController.text == "shop"){
+            setState(() {
+              _isLoading = false;
+            });
+            if(_emailController.text == "shop" && _passwordController.text == "shop"){
               print('Login Button Pressed');
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (BuildContext context) => landingScreen()),
               );
             }
+           else if(_user.id != null){
+             Navigator.push(
+               context,
+               MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),
+             );
+           }
            else 
            {
               _showAlertforsignin();
