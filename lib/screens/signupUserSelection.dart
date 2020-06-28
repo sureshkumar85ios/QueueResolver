@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/screens/Signup.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
 import 'package:my_app/utilities/styles.dart';
 
 class SignupUserSelectionScreen extends StatefulWidget {
@@ -18,8 +19,10 @@ class _SignupUserSelectionScreenState extends State<SignupUserSelectionScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-          onPressed: () {
+          onPressed: () async {
+            await StorageUtil.getInstance();
             print('Login Button Pressed');
+            StorageUtil.putString("userSelection","SHOP_USER");
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -50,8 +53,16 @@ class _SignupUserSelectionScreenState extends State<SignupUserSelectionScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
-        padding: EdgeInsets.all(50.0),
+        onPressed: () async {
+          await StorageUtil.getInstance();
+          print('Login Button Pressed');
+          StorageUtil.putString("userSelection","GENERAL_USER");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => SignupScreen()),
+          );
+        },        padding: EdgeInsets.all(50.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

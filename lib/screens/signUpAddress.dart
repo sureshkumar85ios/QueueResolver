@@ -5,6 +5,7 @@ import 'package:my_app/data/signupModel.dart';
 import 'package:my_app/login_rest_ds.dart';
 import 'package:my_app/models/api_response.dart';
 import 'package:my_app/screens/login.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
 import 'package:my_app/utilities/styles.dart';
 import 'package:my_app/data/service/Fieldvalidation_services.dart';
 
@@ -31,7 +32,8 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
   final _pincodeController =TextEditingController();
   final _firstNameController =TextEditingController();
   final _lastNameController =TextEditingController();
-  final _userType = 'GENERAL_USER';
+  //final _userType = 'GENERAL_USER';
+
 
 
   // receive data from the FirstScreen as a parameter
@@ -192,9 +194,11 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed:  () async {
-            setState(() {
+          await StorageUtil.getInstance();
+          setState(() {
               _isLoading = true;
             });
+            final _userType = StorageUtil.getString('userSelection');
             final note = signupModel(
                 cellphoneNumber: widget.mobileNumber,
                 emailAddress: widget.email,
@@ -206,7 +210,7 @@ class _SignupAddressScreenState extends State<SignupAddressScreen> {
                 type:_userType,
                 username:widget.userName,
             );
-            print(note.password+note.username+note.emailAddress+note.surname+note.type+note.cellphoneNumber+note.locationPin+note.postalCode);
+            print(note.password+note.username+note.emailAddress+note.surname+note.type+note.cellphoneNumber+note.locationPin+note.postalCode+note.type);
             final  APIResponse<bool> result = await createSignUpUser(note);
 
             setState(() {
