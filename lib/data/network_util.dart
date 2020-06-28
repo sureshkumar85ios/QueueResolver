@@ -1,17 +1,59 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_app/data/fetchPersonBookedQueues.dart';
 import 'package:my_app/data/fetchQueueList.dart';
+import 'package:my_app/data/signupModel.dart';
 import 'package:my_app/models/api_response.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
 import 'ShopList.dart';
 
 class Services {
   static const String shop_url = 'https://queue-keeper.herokuapp.com/api/v1/company';
   static const String login_url = 'https://queue-keeper.herokuapp.com/api/v1/login';
   static const String queue_list_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/2';
+  static const String booked_Queue_list = 'https://queue-keeper.herokuapp.com/api/v1/queue/person/';
+  static const String create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
+
   static const headers = {
     'Content-Type': 'application/json'
   };
+
+//  Future<APIResponse<bool>> createUser(signupModel item) {
+//    return http.post(create_user, headers: headers, body: json.encode(item.toJson())).then((data) {
+//      if (data.statusCode == 201) {
+//        return APIResponse<bool>(data: true);
+//      }
+//      return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+//    }).catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+//  }
+
+  Future<APIResponse<List<fetchPersonBookedQueues>>> getBookedQueueList() {
+    final String userId = StorageUtil.getString('userid');
+
+    return http.get(booked_Queue_list + userId, headers: headers).then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        final notes = <fetchPersonBookedQueues>[];
+        for (var item in jsonData) {
+        notes.add(fetchPersonBookedQueues.fromJson(item));
+        }
+        return APIResponse<List<fetchPersonBookedQueues>>(data: notes);
+      }
+      return APIResponse<List<fetchPersonBookedQueues>>(error: true, errorMessage: 'An error occured');
+    })
+        .catchError((_) => APIResponse<List<fetchPersonBookedQueues>>(error: true, errorMessage: 'An error occured'));
+  }
+
+  Future<APIResponse<bool>> createNote(signupModel item) {
+    return http.post(create_user, headers: headers, body: json.encode(item.toJson())).then((data) {
+      if (data.statusCode == 201) {
+        return APIResponse<bool>(data: true);
+      }
+      return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+    })
+        .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+  }
 
   Future<APIResponse<List<fetchQueueList>>> getNotesList() {
     return http.get(queue_list_urls, headers: headers).then((data) {

@@ -14,6 +14,10 @@ GlobalKey<FormState>_key=new GlobalKey();
 class _SignupScreenState extends State<SignupScreen> {
 
   static const String _title = 'Sign Up';
+  final _mobilenoContoller =TextEditingController();
+  final _emailController =TextEditingController();
+  final _passwordController =TextEditingController();
+  final _usernameNameController =TextEditingController();
 
   Widget _buildMobileNoTF() {
     return Column(
@@ -29,6 +33,7 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: _mobilenoContoller,
             keyboardType: TextInputType.phone,
             style: TextStyle(
               color: Colors.white,
@@ -64,7 +69,8 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -100,7 +106,8 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            obscureText: true,
+              controller: _passwordController,
+              obscureText: true,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -171,7 +178,8 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            obscureText: true,
+              controller: _usernameNameController,
+              obscureText: true,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -183,7 +191,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 Icons.shopping_basket,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Facility Name',
+              hintText: 'Enter your Facility Name/User Name',
               hintStyle: kHintTextStyle,
             ),
              validator :Commanvalidator.validate
@@ -192,73 +200,6 @@ class _SignupScreenState extends State<SignupScreen> {
       ],
     );
   }
-
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-//
-//  Widget _buildRememberMeCheckbox() {
-//    return Container(
-//      height: 20.0,
-//      child: Row(
-//        children: <Widget>[
-//          Theme(
-//            data: ThemeData(unselectedWidgetColor: Colors.white),
-//            child: Checkbox(
-//              value: _rememberMe,
-//              checkColor: Colors.green,
-//              activeColor: Colors.white,
-//              onChanged: (value) {
-//                setState(() {
-//                  _rememberMe = value;
-//                });
-//              },
-//            ),
-//          ),
-//          Text(
-//            'Remember me',
-//            style: kLabelStyle,
-//          ),
-//        ],
-//      ),
-//    );
-//  }
-
-//  Widget _buildNextBtn() {
-//    return Container(
-//      padding: EdgeInsets.symmetric(vertical: 25.0),
-//      width: double.infinity,
-//      child: RaisedButton(
-//        elevation: 5.0,
-//        onPressed: () => print('Login Button Pressed'),
-//        padding: EdgeInsets.all(15.0),
-//        shape: RoundedRectangleBorder(
-//          borderRadius: BorderRadius.circular(30.0),
-//        ),
-//        color: Colors.white,
-//        child: Text(
-//          'Next',
-//          style: TextStyle(
-//            color: Color(0xFF527DAA),
-//            letterSpacing: 1.5,
-//            fontSize: 18.0,
-//            fontWeight: FontWeight.bold,
-//            fontFamily: 'OpenSans',
-//          ),
-//        ),
-//      ),
-//    );
-//  }
 
   Widget _buildNextBtn() {
     return Container(
@@ -271,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
           if (_key.currentState.validate() ){
           Navigator.push(            
             context,
-            MaterialPageRoute(builder: (BuildContext context) => SignupAddressScreen()),
+            MaterialPageRoute(builder: (BuildContext context) => SignupAddressScreen(_passwordController.text,_mobilenoContoller.text,_usernameNameController.text,_emailController.text)),
           );
             } return null;
           }

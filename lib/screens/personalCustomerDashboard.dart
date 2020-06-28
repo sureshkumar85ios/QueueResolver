@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:my_app/data/fetchPersonBookedQueues.dart';
 import 'package:my_app/data/fetchQueueList.dart';
 import 'package:my_app/data/network_util.dart';
 import 'package:my_app/models/api_response.dart';
@@ -19,7 +20,7 @@ var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
     'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
 
-APIResponse<List<fetchQueueList>> _apiResponse;
+APIResponse<List<fetchPersonBookedQueues>> _apiResponse;
 
 class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
   Services get service => GetIt.I<Services>();
@@ -34,8 +35,9 @@ class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
     setState(() {
       _isLoading = true;
     });
-    _apiResponse = await service.getNotesList();
-    print(_apiResponse.data.length);
+   // _apiResponse = await service.getNotesList(); //this is for start the Queue
+    _apiResponse = await service.getBookedQueueList();
+    print(_apiResponse.data);
 
     setState(() {
       _isLoading = false;
@@ -134,9 +136,9 @@ class MiddleSection extends StatelessWidget {
                       return Center(child: Text(_apiResponse.errorMessage));
                     }
                     return ItemCard(
-                      _apiResponse.data[index].company.companyName,
-                      _apiResponse.data[index].totalInQueue.toString(),
-                      _apiResponse.data[index].company.logo,
+                      _apiResponse.data[index].companyName,
+                      'Your Queue No is'+_apiResponse.data[index].queueNumber,
+                      _apiResponse.data[index].companylogo,
                     );
                   },
                 )
