@@ -207,14 +207,13 @@ void _showAlertforsignin(){
             setState(() {
               _isLoading = false;
             });
-            if(_emailController.text == "shop" && _passwordController.text == "shop"){
-              print('Login Button Pressed');
+            if(_user.type == 'SHOP_USER'){ //Vendor
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (BuildContext context) => landingScreen()),
               );
             }
-           else if(_user.id != null){
+           else if(_user.type == 'GENERAL_USER'){
              Navigator.push(
                context,
                MaterialPageRoute(builder: (BuildContext context) => userLandingScreen()),

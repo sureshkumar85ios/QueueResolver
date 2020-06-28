@@ -67,12 +67,16 @@ Future<BookQueueResponse> PostBookQueueCustomer(String shopid) async{
     'Content-type': 'application/json'}, body: body);
 
   print('**Input_URL** : ' + response.body);
+  try {
   if(response.statusCode == 200){
     final String responseString = response.body;
     print('**response_string** : ' + response.body);
     return bookQueueResponseFromJson(responseString);
-  }else{
-    return null;
+  }
+  }
+  catch (e) {
+    print(e);
+    return bookQueueResponseFromJson(e.toString());
   }
 }
 
