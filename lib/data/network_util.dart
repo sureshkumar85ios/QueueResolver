@@ -11,7 +11,6 @@ import 'ShopList.dart';
 class Services {
   static const String shop_url = 'https://queue-keeper.herokuapp.com/api/v1/company';
   static const String login_url = 'https://queue-keeper.herokuapp.com/api/v1/login';
-  static const String queue_list_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/2';
   static const String booked_Queue_list = 'https://queue-keeper.herokuapp.com/api/v1/queue/person/';
   static const String create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
 
@@ -55,20 +54,17 @@ class Services {
         .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
   }
 
-  Future<APIResponse<List<fetchQueueList>>> getNotesList() {
-    return http.get(queue_list_urls, headers: headers).then((data) {
-      if (data.statusCode == 200) {
-        final jsonData = json.decode(data.body);
-        final notes = <fetchQueueList>[];
-        //for (var item in jsonData) {
-          notes.add(fetchQueueList.fromJson(jsonData));
-        //}
-        return APIResponse<List<fetchQueueList>>(data: notes);
-      }
-      return APIResponse<List<fetchQueueList>>(error: true, errorMessage: 'An error occured');
-    })
-        .catchError((_) => APIResponse<List<fetchQueueList>>(error: true, errorMessage: 'An error occured'));
-  }
+//  Future<APIResponse<bool>> createQueue() {
+//    final String userId = StorageUtil.getString('userid');
+//    final String user = '2';
+//    return http.post(queue_list_urls + user, headers: headers).then((data) {
+//      if (data.statusCode == 201) {
+//        return APIResponse<bool>(data: true);
+//      }
+//      return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+//    })
+//        .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+//  }
 
   static Future<List<ShopList>> getShopList() async {
     try {

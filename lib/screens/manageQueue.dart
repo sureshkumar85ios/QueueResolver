@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/data/fetchQueueList.dart';
+import 'package:my_app/data/network_util.dart';
+import 'package:my_app/login_rest_ds.dart';
+import 'package:my_app/models/api_response.dart';
+import 'package:my_app/utilities/AlertUtil.dart';
 
 class bookQueue extends StatefulWidget {
   @override
@@ -9,6 +15,9 @@ var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 
 class _bookQueueState extends State<bookQueue> {
+  Services get service => GetIt.I<Services>();
+  APIResponse<fetchQueueList> _apiResponse;
+
   Items item1 = new Items(
       title: "Start Queue",
       subtitle: "Queue Start at",
@@ -42,6 +51,7 @@ class _bookQueueState extends State<bookQueue> {
 
   @override
   Widget build(BuildContext context) {
+
     List<Items> myList = [item1, item2, item3, item4,item5];
     var color = 0xff453658;
     return Container(
@@ -53,7 +63,20 @@ class _bookQueueState extends State<bookQueue> {
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: myList.map((data) {
-            return Container(
+            return GestureDetector(
+            onTap: () async {
+              print(data.title);
+              if(data.title == 'Start Queue') {
+
+                  final  APIResponse<bool> result = await createQueue();
+                  print(result.data);
+                  final title = result.error ? (result.errorMessage ?? 'Alert') : 'Done';
+                  final text = result.error ? (result.errorMessage ?? 'An error occurred') : 'Queue has been started';
+                  showAlertDialog(this.context, title, text);
+                }
+
+            },
+                child: Container(
               decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topRight,
@@ -105,7 +128,8 @@ class _bookQueueState extends State<bookQueue> {
                   ),
                 ],
               ),
-            );
+                  )
+                  );
           }).toList()),
     );
   }

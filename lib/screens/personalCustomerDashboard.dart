@@ -122,12 +122,14 @@ class MiddleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 350.0,
+              height: 450.0,
 
-                child: ListView.builder(
+                child:ListView.separated(
+                  //padding: const EdgeInsets.only(bottom:30),
                   itemCount:_apiResponse == null?1:_apiResponse.data.length,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(0),
+                  separatorBuilder: (BuildContext context, int index) => Divider(),
+                  //physics: BouncingScrollPhysics(),
+                  //padding: EdgeInsets.all(0),
                   itemBuilder: (context, index){
                     if (_isLoading) {
                       return Center(child: CircularProgressIndicator());
@@ -140,6 +142,7 @@ class MiddleSection extends StatelessWidget {
                       'Your Queue No is'+_apiResponse.data[index].queueNumber,
                       _apiResponse.data[index].companylogo,
                     );
+
                   },
                 )
             ),
@@ -162,9 +165,10 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Container(
-        //    padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 18.0),
+      padding: const EdgeInsets.only(right: 18.0),
+      child: new Container(
+            //padding: EdgeInsets.symmetric(vertical: 14.0, bo: 18.0),
+        padding: new EdgeInsets.all(18.0),
 //    decoration: BoxDecoration(
 //      color: Colors.white,
 //      borderRadius: BorderRadius.circular(18),
@@ -229,7 +233,9 @@ class ItemCard extends StatelessWidget {
               )
           ],
               ),
+
     ),
+
     ),
     );
   }

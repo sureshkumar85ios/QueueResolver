@@ -16,10 +16,25 @@ import 'models/api_response.dart';
 final  book_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/book';
 final queue_list_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/';
 final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
+final queue_list_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/';
+
 
 const headers = {
   'Content-Type': 'application/json'
 };
+
+
+Future<APIResponse<bool>> createQueue() {
+  final String userId = StorageUtil.getString('userid');
+  final String user = '2';
+  return http.get(queue_list_urls + user, headers: headers).then((data) {
+    if (data.statusCode == 200) {
+      return APIResponse<bool>(data: true);
+    }
+    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+  })
+      .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+}
 
 Future<APIResponse<bool>> createSignUpUser(signupModel item) {
   return http.post(create_user, headers: headers, body: json.encode(item.toJson())).then((data) {
