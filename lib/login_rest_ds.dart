@@ -16,7 +16,7 @@ import 'models/api_response.dart';
 final  book_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/book';
 final queue_list_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/';
 final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
-final queue_list_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/';
+final start_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader';
 
 
 const headers = {
@@ -24,10 +24,45 @@ const headers = {
 };
 
 
+Future<APIResponse<bool>> createPostQueue() async{
+  final String userId = StorageUtil.getString('userid');
+  final String companyId = StorageUtil.getString('companyId');
+
+  final Map data = {
+    'companyid': companyId,
+    'userid': userId,
+    'queueName': 'string',
+   'queueIntervalsInMinutes': 0,
+    'numberAllowedAtATime': 0
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  final response = await http.post(start_queue_urls, headers: {
+    'Content-type': 'application/json'}, body: body);
+
+  print('**LOGIN_URL** : ' + response.body);
+  if(response.statusCode == 201){
+    //final String responseString = response.body;
+    return APIResponse<bool>(data: true);  }
+  else{
+    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+  }
+
+//  return http.post(start_queue_urls, headers: headers ,body: body).then((data) {
+//    if (data.statusCode == 200) {
+//      return APIResponse<bool>(data: true);
+//    }
+//    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+//  })
+//      .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+
+}
+
 Future<APIResponse<bool>> createQueue() {
   final String userId = StorageUtil.getString('userid');
-  final String user = '2';
-  return http.get(queue_list_urls + user, headers: headers).then((data) {
+  final String user = '1';
+  return http.get(start_queue_urls + user, headers: headers).then((data) {
     if (data.statusCode == 200) {
       return APIResponse<bool>(data: true);
     }
@@ -91,6 +126,8 @@ Future<BookQueueResponse> PostBookQueueCustomer(String shopid) async{
   }
   catch (e) {
     print(e);
+    print('**response_error_string** : ' + e.toString());
+
     return bookQueueResponseFromJson(e.toString());
   }
 }

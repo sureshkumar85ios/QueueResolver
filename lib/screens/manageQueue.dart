@@ -68,10 +68,10 @@ class _bookQueueState extends State<bookQueue> {
               print(data.title);
               if(data.title == 'Start Queue') {
 
-                  final  APIResponse<bool> result = await createQueue();
+                  final  APIResponse<bool> result = await createPostQueue();
                   print(result.data);
-                  final title = result.error ? (result.errorMessage ?? 'Alert') : 'Done';
-                  final text = result.error ? (result.errorMessage ?? 'An error occurred') : 'Queue has been started';
+                  final title = result.error ?'Info' : 'Done';
+                  final text = result.error ? 'An active queue setup already exists for the day' : 'Queue has been started';
                   showAlertDialog(this.context, title, text);
                 }
 

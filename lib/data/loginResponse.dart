@@ -10,6 +10,7 @@ String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
   LoginResponse({
+    this.companyId,
     this.id,
     this.person,
     this.status,
@@ -17,13 +18,15 @@ class LoginResponse {
     this.username,
   });
 
+  int companyId;
   int id;
   Person person;
   String status;
   String type;
   String username;
 
-  factory LoginResponse.fromJson(Map<dynamic, dynamic> json) => LoginResponse(
+  factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+    companyId: json["companyId"],
     id: json["id"],
     person: Person.fromJson(json["person"]),
     status: json["status"],
@@ -32,6 +35,7 @@ class LoginResponse {
   );
 
   Map<String, dynamic> toJson() => {
+    "companyId": companyId,
     "id": id,
     "person": person.toJson(),
     "status": status,
@@ -46,7 +50,6 @@ class Person {
     this.cellphoneNumber,
     this.emailAddress,
     this.id,
-    this.idNumber,
     this.name,
     this.surname,
   });
@@ -55,7 +58,6 @@ class Person {
   String cellphoneNumber;
   String emailAddress;
   int id;
-  String idNumber;
   String name;
   String surname;
 
@@ -64,7 +66,6 @@ class Person {
     cellphoneNumber: json["cellphoneNumber"],
     emailAddress: json["emailAddress"],
     id: json["id"],
-    idNumber: json["idNumber"],
     name: json["name"],
     surname: json["surname"],
   );
@@ -74,7 +75,6 @@ class Person {
     "cellphoneNumber": cellphoneNumber,
     "emailAddress": emailAddress,
     "id": id,
-    "idNumber": idNumber,
     "name": name,
     "surname": surname,
   };

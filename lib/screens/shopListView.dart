@@ -191,7 +191,13 @@ class shopListViewState extends State<shopListView> {
                                   });
                                   var shopId = filteredShopsArray[index].id;
                                   final BookQueueResponse response  = await PostBookQueueCustomer(shopId.toString());
-                                  print('**BUTTON_CLICKED** : ' + response.queueNumber);
+                                  print('**BUTTON_CLICKED** : ' + response.toString());
+                                  //print('**BUTTON_CLICKED** : ' + response.queueNumber);
+                                  if(response.toString() == null)
+                                    {
+                                      showAlertDialog(this.context,'Alert',"Todays queue hasn't started yet, kindly try again");
+                                    }
+                                  else
                                   showAlertDialog(this.context,'Your have been booked the Queue',response.queueNumber);
                                 },
                                 shape: RoundedRectangleBorder(

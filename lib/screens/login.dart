@@ -198,6 +198,7 @@ void _showAlertforsignin(){
            setState(() {
              _user = response;
              print('**LOGIN_USER** : '+_user.username);
+             StorageUtil.putString("companyId", _user.companyId.toString());
              StorageUtil.putString("username",_user.username);
              StorageUtil.putString("userid",_user.id.toString());
              StorageUtil.putString("address",_user.person.address.toString());

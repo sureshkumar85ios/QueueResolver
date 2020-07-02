@@ -21,9 +21,10 @@ var profileImage = NetworkImage(
     'https://static1.squarespace.com/static/55f45174e4b0fb5d95b07f39/t/5aec4511aa4a991e53e6c044/1525433627644/Alexandra+Agoston+archives.jpg?format=1000w');
 
 APIResponse<List<fetchPersonBookedQueues>> _apiResponse;
+Services get service => GetIt.I<Services>();
+
 
 class _personalCustomerDashboardState extends State<personalCustomerDashboard> {
-  Services get service => GetIt.I<Services>();
 
 
   @override
@@ -91,10 +92,21 @@ class BottomSection extends StatelessWidget {
   }
 }
 
-class MiddleSection extends StatelessWidget {
-  const MiddleSection({
-    Key key,
-  }) : super(key: key);
+class MiddleSection extends StatefulWidget {
+  @override
+  _middleSectionState createState() => _middleSectionState();
+
+}
+class _middleSectionState extends State<MiddleSection>{
+  //Your code here}
+  Future<void> _pullRefresh() async {
+
+    // _apiResponse = await service.getNotesList(); //this is for start the Queue
+    setState(() async {
+      _apiResponse = await service.getBookedQueueList();
+      print(_apiResponse.data);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +135,9 @@ class MiddleSection extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
               height: 450.0,
-
-                child:ListView.separated(
+              child: RefreshIndicator(
+                  onRefresh: _pullRefresh,
+                  child:ListView.separated(
                   //padding: const EdgeInsets.only(bottom:30),
                   itemCount:_apiResponse == null?1:_apiResponse.data.length,
                   separatorBuilder: (BuildContext context, int index) => Divider(),
@@ -145,13 +158,24 @@ class MiddleSection extends StatelessWidget {
 
                   },
                 )
+              ),
             ),
           )
         ],
       ),
     );
   }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+
 }
+
+
+
 
 class ItemCard extends StatelessWidget {
   final name;
