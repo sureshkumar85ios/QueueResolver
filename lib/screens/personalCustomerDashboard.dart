@@ -150,6 +150,7 @@ class _middleSectionState extends State<MiddleSection>{
                     if (_apiResponse.error) {
                       return Center(child: Text(_apiResponse.errorMessage));
                     }
+                    
                     return ItemCard(
                       _apiResponse.data[index].companyName,
                       'Your Queue No is'+_apiResponse.data[index].queueNumber,

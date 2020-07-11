@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_app/data/bookQueueResponse.dart';
 import 'package:my_app/data/signupModel.dart';
+import 'package:my_app/models/VendorDashboard.dart';
 import 'package:my_app/utilities/StorageUtil.dart';
 import 'dart:io';
 
@@ -17,6 +18,7 @@ final  book_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/book';
 final queue_list_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/';
 final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
 final start_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader';
+
 
 
 const headers = {
@@ -58,6 +60,7 @@ Future<APIResponse<bool>> createPostQueue() async{
 //      .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
 
 }
+
 
 Future<APIResponse<bool>> createQueue() {
   final String userId = StorageUtil.getString('userid');

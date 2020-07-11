@@ -1,6 +1,12 @@
+import 'package:date_format/date_format.dart';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:my_app/data/network_util.dart';
+import 'package:my_app/login_rest_ds.dart';
+import 'package:my_app/models/VendorDashboard.dart';
+import 'package:my_app/models/api_response.dart';
 import 'package:my_app/screens/QRScan.dart';
 
 class customerDashboard extends StatefulWidget {
@@ -12,8 +18,30 @@ var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
     'https://logos-download.com/wp-content/uploads/2016/06/Spar_logo_white_background.png?format=1000w');
+bool _isLoading = false;
+
+APIResponse<List<VendorDashboard>> _apiResponse;
+Services get service => GetIt.I<Services>();
 
 class _customerDashboardState extends State<customerDashboard> {
+  @override
+  void initState() {
+    _fetchNotes();
+    super.initState();
+  }
+  _fetchNotes() async {
+    setState(() {
+      _isLoading = true;
+    });
+    // _apiResponse = await service.getNotesList(); //this is for start the Queue
+    _apiResponse = await service.getDashboardQueueDetails();
+    //print(_apiResponse.data.length);
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +92,90 @@ class MiddleSection extends StatelessWidget {
   const MiddleSection({
     Key key,
   }) : super(key: key);
+  Future<void> _pullRefresh() async {
+
+    // _apiResponse = await service.getNotesList(); //this is for start the Queue
+//    setState(() async {
+//      _apiResponse = await service.getBookedQueueList();
+//      print(_apiResponse.data);
+//    });
+  }
+
+  String date(DateTime tm) {
+    DateTime today = new DateTime.now();
+    Duration oneDay = new Duration(days: 1);
+    Duration twoDay = new Duration(days: 2);
+    Duration oneWeek = new Duration(days: 7);
+    String month;
+    switch (tm.month) {
+      case 1:
+        month = "january";
+        break;
+      case 2:
+        month = "february";
+        break;
+      case 3:
+        month = "march";
+        break;
+      case 4:
+        month = "april";
+        break;
+      case 5:
+        month = "may";
+        break;
+      case 6:
+        month = "june";
+        break;
+      case 7:
+        month = "july";
+        break;
+      case 8:
+        month = "august";
+        break;
+      case 9:
+        month = "september";
+        break;
+      case 10:
+        month = "october";
+        break;
+      case 11:
+        month = "november";
+        break;
+      case 12:
+        month = "december";
+        break;
+    }
+
+    Duration difference = today.difference(tm);
+
+    if (difference.compareTo(oneDay) < 1) {
+      return "today";
+    } else if (difference.compareTo(twoDay) < 1) {
+      return "yesterday";
+    } else if (difference.compareTo(oneWeek) < 1) {
+      switch (tm.weekday) {
+        case 1:
+          return "monday";
+        case 2:
+          return "tuesday";
+        case 3:
+          return "wednesday";
+        case 4:
+          return "thurdsday";
+        case 5:
+          return "friday";
+        case 6:
+          return "saturday";
+        case 7:
+          return "sunday";
+      }
+    } else if (tm.year == today.year) {
+      return '${tm.day} $month';
+    } else {
+      return '${tm.day} $month ${tm.year}';
+    }
+    return "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,20 +203,55 @@ class MiddleSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Container(
-              height: 350.0,
-              child: ListView(
-                padding: EdgeInsets.all(0.0),
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  ItemCard(Icons.closed_caption, 'Total', '2 queues'),
-                  SizedBox(height: 8.0,),
-                  ItemCard(Icons.queue, 'Current Queue', '1' ),
-                  SizedBox(height: 8.0,),
-               //   ItemCard(Icons.queue, 'time interval per queue', '5 mins'),
-                  SizedBox(height: 8.0,),
-                ],
+              height: 450.0,
+              child: RefreshIndicator(
+                  onRefresh: _pullRefresh,
+                  child:ListView.separated(
+                    //padding: const EdgeInsets.only(bottom:30),
+                    //itemCount:_apiResponse == null?1:_apiResponse.data.length,
+                      itemCount:1,
+                    separatorBuilder: (BuildContext context, int index) => Divider(),
+                    //physics: BouncingScrollPhysics(),
+                    //padding: EdgeInsets.all(0),
+                    itemBuilder: (context, index){
+                      if (_isLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (_apiResponse.error) {
+                        return Center(child: Text(_apiResponse.errorMessage));
+                      }
+//                      final todayDate = _apiResponse.data[index].queueDate;
+//                      print(formatDate(todayDate, [yyyy, mm, dd]));
+//                      final DateTime now = DateTime(_apiResponse.data[index].queueDate.toString());
+//                      print(date(now));
+                      return ItemCard(
+                          Icons.closed_caption, 'Total in Queue' , _apiResponse.data[_apiResponse.data.length - 1].totalInQueue.toString());
+
+//                      return ItemCard(
+//                        _apiResponse.data[index].companyName,
+//                        'Your Queue No is'+_apiResponse.data[index].queueNumber,
+//                        _apiResponse.data[index].companylogo,
+//                      );
+
+                    },
+                  )
               ),
             ),
+//            child: Container(
+//              height: 350.0,
+//              child: ListView(
+//                padding: EdgeInsets.all(0.0),
+//                scrollDirection: Axis.vertical,
+//                children: <Widget>[
+//                  ItemCard(Icons.closed_caption, 'Total in Queue', _apiResponse.data[_apiResponse.data.length-1].totalInQueue.toString()),
+//                  SizedBox(height: 8.0,),
+//                 // ItemCard(Icons.queue, 'Current Queue', '1' ),
+//                  SizedBox(height: 8.0,),
+//               //   ItemCard(Icons.queue, 'time interval per queue', '5 mins'),
+//                  SizedBox(height: 8.0,),
+//                ],
+//              ),
+//            ),
           )
         ],
       ),
@@ -192,7 +339,7 @@ class UpperSection extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 50.0,
-                backgroundImage: AssetImage("assets/images/spar.png"),
+                backgroundImage: NetworkImage(_apiResponse.data[0].logo),
               ),
               SizedBox(
                 height: 8.0,

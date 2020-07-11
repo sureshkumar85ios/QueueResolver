@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:my_app/data/fetchPersonBookedQueues.dart';
 import 'package:my_app/data/fetchQueueList.dart';
 import 'package:my_app/data/signupModel.dart';
+import 'package:my_app/models/VendorDashboard.dart';
 import 'package:my_app/models/api_response.dart';
 import 'package:my_app/utilities/StorageUtil.dart';
 import 'ShopList.dart';
@@ -13,6 +14,7 @@ class Services {
   static const String login_url = 'https://queue-keeper.herokuapp.com/api/v1/login';
   static const String booked_Queue_list = 'https://queue-keeper.herokuapp.com/api/v1/queue/person/';
   static const String create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
+  static const String vendor_dashboard = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/company/';
 
   static const headers = {
     'Content-Type': 'application/json'
@@ -27,8 +29,27 @@ class Services {
 //    }).catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
 //  }
 
+  Future<APIResponse<List<VendorDashboard>>> getDashboardQueueDetails() {
+    final String companyId = StorageUtil.getString('companyId');
+    //final String companyId = '1';
+
+    return http.get(vendor_dashboard + companyId, headers: headers).then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        final notes = <VendorDashboard>[];
+        for (var item in jsonData) {
+          notes.add(VendorDashboard.fromJson(item));
+        }
+        return APIResponse<List<VendorDashboard>>(data: notes);
+      }
+      return APIResponse<List<VendorDashboard>>(error: true, errorMessage: 'An error occured');
+    })
+        .catchError((_) => APIResponse<List<VendorDashboard>>(error: true, errorMessage: 'An error occured'));
+  }
+
   Future<APIResponse<List<fetchPersonBookedQueues>>> getBookedQueueList() {
     final String userId = StorageUtil.getString('userid');
+    //final String userId = '1';
 
     return http.get(booked_Queue_list + userId, headers: headers).then((data) {
       if (data.statusCode == 200) {
