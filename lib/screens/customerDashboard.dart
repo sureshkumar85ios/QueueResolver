@@ -306,6 +306,12 @@ class UpperSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (_apiResponse.error) {
+      return Center(child: Text(_apiResponse.errorMessage));
+    }
     return Column(
       children: <Widget>[
         Padding(
@@ -337,15 +343,23 @@ class UpperSection extends StatelessWidget {
               SizedBox(
                 height: 8.0,
               ),
+//              CircleAvatar(
+//                radius: 50.0,
+//                backgroundImage: NetworkImage(_apiResponse.data[0].logo),
+//              ),
               CircleAvatar(
-                radius: 50.0,
-                backgroundImage: NetworkImage(_apiResponse.data[0].logo),
+                radius: 40,
+                child: ClipOval(
+                  child: Image.network(
+                    _apiResponse.data[0].logo,
+                  ),
+                ),
               ),
               SizedBox(
                 height: 8.0,
               ),
               Text(
-                'Spar Norwood',
+                _apiResponse.data[0].companyName,
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
