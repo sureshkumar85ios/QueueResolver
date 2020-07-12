@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:my_app/data/bookQueueResponse.dart';
 import 'package:my_app/data/signupModel.dart';
 import 'package:my_app/models/VendorDashboard.dart';
+import 'package:my_app/models/startQueue.dart';
 import 'package:my_app/utilities/StorageUtil.dart';
 import 'dart:io';
 
@@ -18,6 +19,8 @@ final  book_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/book';
 final queue_list_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/';
 final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
 final start_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader';
+final cancel_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/company/cancel';
+
 
 
 
@@ -25,11 +28,41 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
+Future<APIResponse<bool>> cancelPostedQueue() async{
+  final String queueId = StorageUtil.getString('queueId');
 
-Future<APIResponse<bool>> createPostQueue() async{
+  final Map data = {
+    'cancelReasons': "testReasons",
+    'queueHeaderId': queueId
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  final response = await http.put(cancel_queue_urls, headers: {
+    'Content-type': 'application/json'}, body: body);
+
+  print('**LOGIN_URL** : ' + response.body);
+  if(response.statusCode == 200){
+    //final String responseString = response.body;
+    return APIResponse<bool>(data: true);  }
+  else{
+    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+  }
+
+//  return http.post(start_queue_urls, headers: headers ,body: body).then((data) {
+//    if (data.statusCode == 200) {
+//      return APIResponse<bool>(data: true);
+//    }
+//    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+//  })
+//      .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+
+}
+
+Future<APIResponse<startQueue>> createPostQueue() async{
   final String userId = StorageUtil.getString('userid');
   final String companyId = StorageUtil.getString('companyId');
-
+  //final String companyId = '3';
   final Map data = {
     'companyid': companyId,
     'userid': userId,
@@ -45,10 +78,13 @@ Future<APIResponse<bool>> createPostQueue() async{
 
   print('**LOGIN_URL** : ' + response.body);
   if(response.statusCode == 201){
-    //final String responseString = response.body;
-    return APIResponse<bool>(data: true);  }
+    final  jsonData = json.decode(response.body);
+    //final List<startQueue> notes = <startQueue>;
+    //notes.add(startQueue.fromJson(jsonData));
+    final notes = startQueue.fromJson(jsonData);
+    return APIResponse<startQueue>(data: notes);  }
   else{
-    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+    return APIResponse<startQueue>(error: true, errorMessage: 'An error occured');
   }
 
 //  return http.post(start_queue_urls, headers: headers ,body: body).then((data) {

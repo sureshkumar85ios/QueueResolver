@@ -5,7 +5,9 @@ import 'package:my_app/data/fetchQueueList.dart';
 import 'package:my_app/data/network_util.dart';
 import 'package:my_app/login_rest_ds.dart';
 import 'package:my_app/models/api_response.dart';
+import 'package:my_app/models/startQueue.dart';
 import 'package:my_app/utilities/AlertUtil.dart';
+import 'package:my_app/utilities/StorageUtil.dart';
 
 class bookQueue extends StatefulWidget {
   @override
@@ -68,12 +70,23 @@ class _bookQueueState extends State<bookQueue> {
               print(data.title);
               if(data.title == 'Start Queue') {
 
-                  final  APIResponse<bool> result = await createPostQueue();
-                  print(result.data);
+                  final  APIResponse<startQueue> result = await createPostQueue();
+                  if(!result.error)
+                    {
+                      print(result.data.id);
+                      StorageUtil.putString("queueId", result.data.id.toString());
+                    }
                   final title = result.error ?'Info' : 'Done';
                   final text = result.error ? 'An active queue setup already exists for the day' : 'Queue has been started';
                   showAlertDialog(this.context, title, text);
                 }
+              else if(data.title == 'Stop Queue')
+              {
+                final  APIResponse<bool> result = await cancelPostedQueue();
+                final title = result.error ?'Info' : 'Cancelled';
+                final text = result.error ? 'An active queue cant cancel for few reasons' : 'Queue has been Cancelled';
+                showAlertDialog(this.context, title, text);
+              }
 
             },
                 child: Container(
