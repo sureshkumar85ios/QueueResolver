@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:my_app/data/bookQueueResponse.dart';
+import 'package:my_app/data/bookSomeoneRequest.dart';
+import 'package:my_app/data/bookSomeoneResponse.dart';
 import 'package:my_app/data/signupModel.dart';
 import 'package:my_app/models/VendorDashboard.dart';
 import 'package:my_app/models/startQueue.dart';
@@ -20,6 +22,8 @@ final queue_list_url = 'https://queue-keeper.herokuapp.com/api/v1/queue/';
 final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
 final start_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader';
 final cancel_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/company/cancel';
+final book_someone = 'https://queue-keeper.herokuapp.com/api/v1/queue/book/other';
+
 
 
 
@@ -118,6 +122,20 @@ Future<APIResponse<bool>> createSignUpUser(signupModel item) {
     return APIResponse<bool>(error: true, errorMessage: 'An error occured');
   })
       .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+}
+
+Future<APIResponse<bookSomeoneResponse>> createQueueForSomeone(bookSomeoneRequest item) {
+  return http.post(book_someone, headers: headers, body: json.encode(item.toJson())).then((data) {
+    if (data.statusCode == 200) {
+      final  jsonData = json.decode(data.body);
+      //final List<startQueue> notes = <startQueue>;
+      //notes.add(startQueue.fromJson(jsonData));
+      final notes = bookSomeoneResponse.fromJson(jsonData);
+      return APIResponse<bookSomeoneResponse>(data: notes);
+    }
+    return APIResponse<bookSomeoneResponse>(error: true, errorMessage: 'An error occured');
+  })
+      .catchError((_) => APIResponse<bookSomeoneResponse>(error: true, errorMessage: 'An error occured'));
 }
 
 Future<LoginResponse> createUser(String name, String password) async{
