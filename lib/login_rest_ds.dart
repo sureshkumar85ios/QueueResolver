@@ -23,6 +23,8 @@ final create_user = 'https://queue-keeper.herokuapp.com/api/v1/user';
 final start_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader';
 final cancel_queue_urls = 'https://queue-keeper.herokuapp.com/api/v1/queueheader/company/cancel';
 final book_someone = 'https://queue-keeper.herokuapp.com/api/v1/queue/book/other';
+final check_in_Verify = 'https://queue-keeper.herokuapp.com/api/v1/queue/verify?';
+final cancel_customer_queue =  'https://queue-keeper.herokuapp.com/api/v1/queue/cancel';
 
 
 
@@ -31,6 +33,30 @@ final book_someone = 'https://queue-keeper.herokuapp.com/api/v1/queue/book/other
 const headers = {
   'Content-Type': 'application/json'
 };
+Future<APIResponse<bool>> cancelCustomerQueue(String queueId) async {
+  //final String queueId = StorageUtil.getString('queueId');
+  final String userId = StorageUtil.getString('userid');
+
+
+  final Map data = {
+    'persornId': userId,
+    'queueId': queueId
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  final response = await http.put(cancel_customer_queue, headers: {
+    'Content-type': 'application/json'}, body: body);
+
+  print('**LOGIN_URL** : ' + response.body);
+  if (response.statusCode == 200) {
+    //final String responseString = response.body;
+    return APIResponse<bool>(data: true);
+  }
+  else {
+    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+  }
+}
 
 Future<APIResponse<bool>> cancelPostedQueue() async{
   final String queueId = StorageUtil.getString('queueId');
@@ -101,6 +127,18 @@ Future<APIResponse<startQueue>> createPostQueue() async{
 
 }
 
+Future<APIResponse<bool>> checkInQueue(String companyId, String queueId) {
+
+  final  userId ='companyId=' + companyId + '&' + 'queueId=' + queueId;
+
+  return http.get(check_in_Verify + userId, headers: headers).then((data) {
+    if (data.statusCode == 200) {
+      return APIResponse<bool>(data: true);
+    }
+    return APIResponse<bool>(error: true, errorMessage: 'An error occured');
+  })
+      .catchError((_) => APIResponse<bool>(error: true, errorMessage: 'An error occured'));
+}
 
 Future<APIResponse<bool>> createQueue() {
   final String userId = StorageUtil.getString('userid');
@@ -133,7 +171,7 @@ Future<APIResponse<bookSomeoneResponse>> createQueueForSomeone(bookSomeoneReques
       final notes = bookSomeoneResponse.fromJson(jsonData);
       return APIResponse<bookSomeoneResponse>(data: notes);
     }
-    return APIResponse<bookSomeoneResponse>(error: true, errorMessage: 'An error occured');
+    return APIResponse<bookSomeoneResponse>(error: true, errorMessage: 'An error occured, please try again');
   })
       .catchError((_) => APIResponse<bookSomeoneResponse>(error: true, errorMessage: 'An error occured'));
 }

@@ -5,7 +5,10 @@ import 'package:my_app/data/fetchPersonBookedQueues.dart';
 import 'package:my_app/data/fetchQueueList.dart';
 import 'package:my_app/data/network_util.dart';
 import 'package:my_app/models/api_response.dart';
+import 'package:my_app/utilities/AlertUtil.dart';
 import 'package:my_app/utilities/StorageUtil.dart';
+
+import '../login_rest_ds.dart';
 
 class personalCustomerDashboard extends StatefulWidget {
   @override
@@ -155,6 +158,8 @@ class _middleSectionState extends State<MiddleSection>{
                       _apiResponse.data[index].companyName,
                       'Your Queue No is'+_apiResponse.data[index].queueNumber,
                       _apiResponse.data[index].companylogo,
+                      _apiResponse.data[index].queueId.toString(),
+                      _apiResponse.data[index].companyId.toString(),
                     );
 
                   },
@@ -182,10 +187,14 @@ class ItemCard extends StatelessWidget {
   final name;
   final tasks;
   final image;
+  final id;
+  final companyId;
   const ItemCard(
       this.name,
       this.tasks,
       this.image,
+      this.id,
+      this.companyId,
       );
   @override
   Widget build(BuildContext context) {
@@ -251,9 +260,9 @@ class ItemCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _iconBuilder(LineAwesomeIcons.check_circle, 'Check-in'),
-                  _iconBuilder(LineAwesomeIcons.times_circle, 'Cancel'),
-                  _iconBuilder(LineAwesomeIcons.compass, 'Directions'),
+                  _iconBuilder(LineAwesomeIcons.check_circle, 'Check-in', id, companyId, context),
+                  _iconBuilder(LineAwesomeIcons.times_circle, 'Cancel', id, companyId, context),
+                  _iconBuilder(LineAwesomeIcons.compass, 'Directions',id, companyId, context),
                 ],
               )
           ],
@@ -266,14 +275,20 @@ class ItemCard extends StatelessWidget {
   }
 }
 
-Column _iconBuilder(icon, title) {
+Column _iconBuilder(IconData icon, String title,String index, String companyId, BuildContext context) {
   return Column(
     children: <Widget>[
-      Icon(
-        icon,
-        size: 28,
-        color: Colors.white,
-      ),
+        IconButton(
+          icon: Icon(icon,size: 28, color: Colors.white ),
+          onPressed: () => _rowMenuAction(title,index,companyId, context),
+        ),
+
+//      ),
+//      Icon(
+//        icon,
+//        size: 28,
+//        color: Colors.white,
+//      ),
       SizedBox(
         height: 8.0,
       ),
@@ -287,6 +302,34 @@ Column _iconBuilder(icon, title) {
       ),
     ],
   );
+}
+
+Future<void> _rowMenuAction(String s, String index, String companyId, BuildContext context) async {
+  //setState(() {
+//    _isLoading = true;
+//  });
+if(s == 'Check-in') {
+  final APIResponse<bool> result = await checkInQueue(companyId, index);
+  //print(result.);
+  final title = result.error ? 'Info' : 'Success!';
+  final text = result.error
+      ? 'problem occurred in checkin please try again'
+      : 'Chcek-in has been successful';
+  showAlertDialog(context, title, text);
+}
+else if (s == 'Cancel')
+  {
+    final APIResponse<bool> result = await cancelCustomerQueue(index);
+    //print(result.);
+    final title = result.error ? 'Info' : 'Success!';
+    final text = result.error
+        ? 'problem occurred in checkin please try again'
+        : 'Queue has been cancelled successfully';
+    showAlertDialog(context, title, text);
+  }
+//        setState(() {
+//        _isLoading = false;
+//          });
 }
 class UpperSection extends StatelessWidget {
   const UpperSection({

@@ -9,6 +9,10 @@ import 'package:my_app/models/VendorDashboard.dart';
 import 'package:my_app/models/api_response.dart';
 import 'package:my_app/screens/QRScan.dart';
 
+APIResponse<List<VendorDashboard>> _apiResponse;
+Services get service => GetIt.I<Services>();
+bool _isLoading = false;
+
 class customerDashboard extends StatefulWidget {
   @override
   _customerDashboardState createState() => _customerDashboardState();
@@ -18,10 +22,6 @@ var color1 = Color(0xFFa572c0);
 var color2 = Color(0xFF6559d4);
 var profileImage = NetworkImage(
     'https://logos-download.com/wp-content/uploads/2016/06/Spar_logo_white_background.png?format=1000w');
-bool _isLoading = false;
-
-APIResponse<List<VendorDashboard>> _apiResponse;
-Services get service => GetIt.I<Services>();
 
 class _customerDashboardState extends State<customerDashboard> {
   @override
@@ -87,18 +87,19 @@ class BottomSection extends StatelessWidget {
     );
   }
 }
+class MiddleSection extends StatefulWidget {
+  @override
+  _middleSection createState() => _middleSection();
+}
 
-class MiddleSection extends StatelessWidget {
-  const MiddleSection({
-    Key key,
-  }) : super(key: key);
+class _middleSection extends State<MiddleSection> {
+
   Future<void> _pullRefresh() async {
 
-    // _apiResponse = await service.getNotesList(); //this is for start the Queue
-//    setState(() async {
-//      _apiResponse = await service.getBookedQueueList();
-//      print(_apiResponse.data);
-//    });
+    final apiResponse = await service.getDashboardQueueDetails();
+    setState(() {
+      _apiResponse = apiResponse;
+    });
   }
 
   String date(DateTime tm) {

@@ -143,7 +143,7 @@ class _bookForSomeoneEntryState extends State<bookForSomeoneEntry> {
 //                            _isLoading = false;
 //                          });
                           final title = result.error ?'Info' : 'Done';
-                          final text = result.error ? 'An active queue setup already exists for the day' : 'Queue has been booked,the queue id is'+result.data.queueId.toString();
+                          final text = result.error ? result.errorMessage : 'Queue has been booked,the queue id is'+result.data.queueId.toString();
 //                          final title = 'Done';
 //                          final text = result.error ? (result.errorMessage ?? 'An error occurred') : 'Queue has been book,the queue id is'+result.data.queueId.toString();
                           showAlertDialog(this.context, title, text);
